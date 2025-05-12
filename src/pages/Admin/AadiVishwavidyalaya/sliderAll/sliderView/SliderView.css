@@ -1,0 +1,42 @@
+/* SliderView.css */
+.slider-view {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.slider-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.main-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.thumbnail-images {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.thumbnail-images img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.thumbnail-images img:hover {
+  transform: scale(1.05);
+  border: 2px solid #c29436; /* हलका गोल्डन टच */
+}

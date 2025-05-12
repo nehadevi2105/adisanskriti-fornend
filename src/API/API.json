@@ -1,0 +1,42 @@
+{
+	"AddCourseForm": "/api/Course",
+	"AddCourseList": "/api/Course",
+	"DeleteCourse": "/api/CoreValues/delete",
+	"UpdateCourse": "/api/Course/Updatecourse/",
+	"GetCourseById": "/api/Course/GetById",
+
+	"AddCoreValueForm": "/api/CoreValues",
+	"GetCoreValuesList": "/api/CoreValues",
+	"DeleteCoreValue": "/api/CoreValues/delete/",
+	"GetCoreValuesById": "/api/CoreValues/GetById/",
+
+	"AddAdiSampadaForm": "/api/Sampadaslider",
+	"GetAdiSampadaList": "/api/Sampadaslider",
+	"DeleteAdiSampada": "/api/Sampadaslider/deleteSliderdata/",
+
+	"State": "/api/Tribes",
+	"Tribe": "/api/Tribes",
+	"Theme": "/api/Theme",
+	"TribebyState": "/api/Tribes/getbyid/",
+	"RepoContent": "/api/AddRepositoryContent",
+	"GetRepoContentList": "/api/AddRepositoryContent",
+	"DeleteRepositoryContent": "/api/AddRepositoryContent/delete/",
+	"GetByIdRepoContent": "/api/AddRepositoryContent/GetById/",
+	"updateRepoContent": "/api/AddRepositoryContent/Update/",
+
+	"AddCourseModule": "/api/CourseModule/insert",
+	"GetCourseModule": "/api/CourseModule/get",
+	"SliderUpload": "/api/Slider/InsertSlider",
+	"SliderList": "/api/Slider/getsliderdata",
+	"DeleteSliderList": "/api/CourseModule/delete/",
+
+	"HomeSlider": "/api/Homeslider",
+	"AddQuestions": "/api/Questions",
+	"GetQuestionsList": "/api/Questions",
+
+	"AddAdiSanskriti": "/api/AadiSanskriti",
+	"GetAdiSanskritiList": "/api/AadiSanskriti",
+	"DeleteAdiSanskriti": "/api/AadiSanskriti/delete/",
+	"GetAdiSanskritiById": "/api/AadiSanskriti/GetById/",
+	"UpdateAdiSanskriti": "/api/AadiSanskriti/Update/"
+}
