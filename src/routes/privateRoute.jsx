@@ -1,4 +1,5 @@
 import Layout from "../components/layout/Layout";
+import LayoutOne from "../pages/website/components/layoutOne/LayoutOne";
 
 // single page list
 import Home from "../pages/home/Home";
@@ -53,7 +54,7 @@ import CategoryAdd from "../pages/category/categoryAdd/CategoryAdd";
 import SliderList from "../pages/Admin/AadiVishwavidyalaya/sliderAll/sliderList/SliderList";
 import SliderUpload from "../pages/Admin/AadiVishwavidyalaya/sliderAll/sliderUpload/SliderUpload";
 import SliderView from "../pages/Admin/AadiVishwavidyalaya/sliderAll/sliderView/SliderView";
-import CourseModuleForm from "../pages/Admin/AadiVishwavidyalaya/CourseModule/CoursemoduleForm";
+//import CourseModuleForm from "../pages/Admin/AadiVishwavidyalaya/CourseModule/CoursemoduleForm";
 
 //Add Course
 import AddCourseForm from "../pages/Admin/AadiVishwavidyalaya/addCourses/AddCourseForm";
@@ -86,6 +87,16 @@ import HomeSliderList from "../pages/Admin/AadiVishwavidyalaya/homeSlider/HomeSl
 import AdiSanskritiForm from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/AdiSanskritiForm";
 import AdiSanskritiList from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/AdiSanskritiList";
 import EditAdiSanskriti from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/EditAdiSanskriti";
+
+//website
+//website header
+import Header from "../pages/website/components/Header";
+import Footer from "../pages/website/components/Footer";
+//Aadi VishwaVidyalaWeb
+import AadiVishwaVidyalaWeb from "../pages/website/aadiVishwaVidyalaWeb/AadiVishwaVidyalaWeb";
+//Aadi Sampada
+import AadiSampada from "../pages/website/aadiSampada/AadiSampada";
+
 
 // create private router
 export const privateRoute = [
@@ -316,6 +327,27 @@ export const privateRoute = [
 						element: <EditAdiSanskriti />,
 					},
 				],
+			},
+		],
+	},
+	{
+		element: <LayoutOne />,
+		children: [
+			{
+				path: "/AadiVishwaVidyalaWeb",
+				element: <AadiVishwaVidyalaWeb />,
+			},
+			{
+				path: "/WebsiteHeader",
+				element: <Header />,
+			},
+			{
+				path: "/WebsiteFooter",
+				element: <Footer />,
+			},
+			{
+				path: "/AadiSampada",
+				element: <AadiSampada />,
 			},
 		],
 	},
