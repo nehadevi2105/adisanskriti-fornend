@@ -28,7 +28,26 @@ const EditCoreValues = () => {
 	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [formData, setFormData] = useState(null);
 
-	const config = { readonly: false, height: 300 };
+	const config = { readonly: false,toolbar: true,
+	spellcheck: true,
+	language: "en",
+	toolbarButtonSize: "medium",
+	showCharsCounter: true,
+	showWordsCounter: true,
+	height: 300,
+	buttons: [
+		"bold",
+		"italic",
+		"underline",
+		"|",
+		"ul",
+		"ol",
+		"|",
+		"image",
+		"link",
+		"|",
+		"source",],
+		 };
 
 	// Fetch existing data
 	useEffect(() => {
@@ -38,8 +57,8 @@ const EditCoreValues = () => {
 				const data = response.data;
 				setValue("Description", data.description);
 				setValue("Type", data.type);
-				setHtmlContent(data.htmlContent || "");
-				setExistingImage(data.imagePath); // assuming image path is returned
+				setHtmlContent(data.html_content || "");
+				setExistingImage(data.image_path); // assuming image path is returned
 			} catch (err) {
 				setSnackbarMessage("Failed to load core value.");
 				setSnackbarSeverity("error");
@@ -70,12 +89,17 @@ const EditCoreValues = () => {
 		formDataToSend.append("Type", formData.Type);
 
 		if (formData.Image && formData.Image.length > 0) {
+			// If a new image is selected, send it
 			formDataToSend.append("Image", formData.Image[0]);
+		} else if (existingImage) {
+			// If no new image, just send the existing image name (not full path)
+			const imageNameOnly = existingImage.split("/").pop(); // Extract file name
+			formDataToSend.append("ImageName", imageNameOnly);
 		}
 
 		try {
 			const response = await APIClient.post(
-				apis.UpdateCoreValueForm,
+				apis.UpdateCoreValueForm + id,
 				formDataToSend,
 				{
 					headers: { "Content-Type": "multipart/form-data" },
@@ -160,7 +184,8 @@ const EditCoreValues = () => {
 						<div className="mt-2">
 							<p className="text-sm text-gray-500">Current Image:</p>
 							<img
-								src={existingImage}
+								/*src={existingImage}*/
+								src={`${APIClient.defaults.baseURL}/${existingImage}`}
 								alt="Current"
 								className="h-20 mt-1 rounded"
 							/>
@@ -175,7 +200,7 @@ const EditCoreValues = () => {
 						ref={editor}
 						value={HtmlContent}
 						config={config}
-						onChange={setHtmlContent}
+						onChange={(newContent) => setHtmlContent(newContent)}
 					/>
 				</div>
 

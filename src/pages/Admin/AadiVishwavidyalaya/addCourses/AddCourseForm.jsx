@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { Button, Snackbar, Alert, FormControl } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx"; // Adjust path as needed
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
@@ -18,6 +18,50 @@ const AddCourseForm = () => {
 	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [formData, setFormData] = useState(null);
 
+	// New state
+	const [stateOptions, setStateOptions] = useState([]);
+	const [tribeOptions, setTribeOptions] = useState([]);
+	const [selectedState, setSelectedState] = useState("");
+
+	const [artFormOptions] = useState([
+		"Tribal Painting",
+		"Tribal Dance",
+		"Tribal Clothing and Textile",
+		"Tribal Artifacts",
+		"Tribal Livelihood",
+	]);
+
+	// Fetch states
+	useEffect(() => {
+		const fetchStates = async () => {
+			const res = await APIClient.get("/api/Tribes");
+			const data = res.data;
+			const uniqueStates = [...new Set(data.map(item => item.state))];
+			setStateOptions(uniqueStates);
+		};
+		fetchStates();
+	}, []);
+
+	// Fetch tribes based on selected state
+	useEffect(() => {
+		const fetchTribes = async () => {
+			if (!selectedState) {
+				setTribeOptions([]);
+				return;
+			}
+			try {
+				const res = await APIClient.get(`/api/Tribes/getbyid/${encodeURIComponent(selectedState)}`);
+				const tribes = res.data.map(item => item.tribename); // ✅ Correct field
+				setTribeOptions(tribes);
+			} catch (err) {
+				console.error("Failed to fetch tribes:", err);
+				setTribeOptions([]);
+			}
+		};
+		fetchTribes();
+	}, [selectedState]);
+	
+
 	const handleFormSubmit = (data) => {
 		setFormData(data);
 		setConfirmOpen(true);
@@ -30,6 +74,9 @@ const AddCourseForm = () => {
 		formDataToSend.append("coursename", formData.coursename);
 		formDataToSend.append("intro", formData.intro);
 		formDataToSend.append("coursetype", formData.coursetype);
+		formDataToSend.append("state", formData.state);
+		formDataToSend.append("tribe", formData.tribe);
+		formDataToSend.append("artform", formData.artform);
 		formDataToSend.append("introvideo", formData.introvideo[0]);
 		formDataToSend.append("coursethumbnail", formData.coursethumbnail[0]);
 
@@ -175,6 +222,52 @@ const AddCourseForm = () => {
 							{errors.coursetype.message}
 						</p>
 					)}
+				</div>
+
+				{/* State Dropdown */}
+				<div className="mb-4">
+					<label className="mb-1 font-medium text-black">State</label>
+					<select
+						{...register("state", { required: "Please select a state" })}
+						className="w-full border border-gray-300 p-2 rounded"
+						onChange={(e) => setSelectedState(e.target.value)}
+					>
+						<option value="">Select State</option>
+						{stateOptions.map(state => (
+							<option key={state} value={state}>{state}</option>
+						))}
+					</select>
+					{errors.state && <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>}
+				</div>
+
+				{/* Tribe Dropdown */}
+				<div className="mb-4">
+					<label className="mb-1 font-medium text-black">Tribe</label>
+					<select
+						{...register("tribe", { required: "Please select a tribe" })}
+						className="w-full border border-gray-300 p-2 rounded"
+					>
+						<option value="">Select Tribe</option>
+						{tribeOptions.map(tribe => (
+							<option key={tribe} value={tribe}>{tribe}</option>
+						))}
+					</select>
+					{errors.tribe && <p className="text-red-500 text-sm mt-1">{errors.tribe.message}</p>}
+				</div>
+
+				{/* Art Form Dropdown */}
+				<div className="mb-4">
+					<label className="mb-1 font-medium text-black">Art Form</label>
+					<select
+						{...register("artform", { required: "Please select an art form" })}
+						className="w-full border border-gray-300 p-2 rounded"
+					>
+						<option value="">Select Art Form</option>
+						{artFormOptions.map(form => (
+							<option key={form} value={form}>{form}</option>
+						))}
+					</select>
+					{errors.artform && <p className="text-red-500 text-sm mt-1">{errors.artform.message}</p>}
 				</div>
 
 				<Button variant="contained" color="primary" type="submit">

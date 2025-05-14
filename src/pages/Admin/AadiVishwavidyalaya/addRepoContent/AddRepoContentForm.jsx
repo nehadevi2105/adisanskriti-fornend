@@ -119,7 +119,7 @@ const AddRepoContentForm = () => {
 	// Fetch tribes when state changes
 	useEffect(() => {
 		if (state) {
-			APIClient.get(`${apis.TribebyState}/${state}`)
+			APIClient.get(apis.TribebyState+state)
 				.then((res) => {
 					setTribeOptions(res.data || []);
 					setValue("tribe", ""); // reset tribe when state changes
@@ -299,10 +299,10 @@ const AddRepoContentForm = () => {
 						render={({ field }) => (
 							<Select {...field} labelId="tribe-label" label="Tribe">
 								<MenuItem value="">Select Tribe</MenuItem>
-								{tribeOptions.map((tribe) => (
-									<MenuItem key={tribe.id} value={tribe.id}>
-										{tribe.tribename}
-									</MenuItem>
+								 {tribeOptions.map((tribe) => (
+								<MenuItem key={tribe.id} value={tribe.tribename}>
+									{tribe.tribename}
+								</MenuItem>
 								))}
 							</Select>
 						)}

@@ -87,6 +87,9 @@ import AdiSanskritiForm from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/Ad
 import AdiSanskritiList from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/AdiSanskritiList";
 import EditAdiSanskriti from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/EditAdiSanskriti";
 
+//Cultural Heritage
+ import CulturalHeritageForm from "../pages/Admin/AadiVishwavidyalaya/culturalHeritage/CulturalHeritageForm";
+
 // create private router
 export const privateRoute = [
 	{
@@ -314,6 +317,10 @@ export const privateRoute = [
 					{
 						path: "/EditAdiSanskriti/:id",
 						element: <EditAdiSanskriti />,
+					},
+					{
+						path: "/CulturalHeritageForm",
+						element: <CulturalHeritageForm />,
 					},
 				],
 			},

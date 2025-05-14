@@ -175,17 +175,25 @@ const EditAdiSanskriti = () => {
 			"Aadihaat_Images",
 		];
 
+		
 		for (const field of imageFields) {
-			if (formData.files[field]?.length) {
+			const imageNameField = `${field}Names`;
+
+			// Append image files
+			if (formData.files[field]?.length > 0) {
 				for (const file of formData.files[field]) {
-					formDataToSend.append(field, file);
+					formDataToSend.append(field, file); // append file to the image field
 				}
 			}
+
+			// Append existing image names
+			const existingNames = existingPreviews[field].map((img) => img.name);
+			formDataToSend.append(imageNameField, existingNames.join(","));
 		}
 
 		try {
 			const response = await APIClient.post(
-				apis.UpdateAdiSanskriti,
+				apis.UpdateAdiSanskriti + id,
 				formDataToSend,
 				{
 					headers: { "Content-Type": "multipart/form-data" },
@@ -228,7 +236,8 @@ const EditAdiSanskriti = () => {
 						{existingPreviews[fieldName].map((file, idx) => (
 							<Box key={idx} sx={{ position: "relative" }}>
 								<img
-									src={file.url}
+									/*src={file.url}*/
+									src={`${APIClient.defaults.baseURL}/${file.url}`}
 									alt={file.name}
 									style={{ width: "75px", height: "auto", borderRadius: 4 }}
 								/>

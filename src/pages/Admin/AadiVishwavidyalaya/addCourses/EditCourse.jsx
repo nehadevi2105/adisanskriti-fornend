@@ -1,245 +1,341 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Button, Snackbar, Alert } from "@mui/material";
+import { useParams } from "react-router-dom";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
-import { useParams, useNavigate } from "react-router-dom";
-import {
-	Button,
-	Snackbar,
-	Alert,
-	FormControl,
-	InputLabel,
-	Input,
-} from "@mui/material"; // Added FormControl and Input
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx";
 
 const EditCourse = () => {
-	const { id } = useParams();
-	const navigate = useNavigate();
+    const { id } = useParams();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        watch,
+        getValues,
+        formState: { errors },
+    } = useForm();
 
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm({
-		defaultValues: {
-			// Corrected: defaultValues should be an object
-			coursename: "",
-			intro: "",
-			coursetype: "",
-			introvideo: null,
-			coursethumbnail: null,
-		},
-	});
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [formData, setFormData] = useState(null);
+    const [courseData, setCourseData] = useState(null);
+    const [stateOptions, setStateOptions] = useState([]);
+    const [tribeOptions, setTribeOptions] = useState([]);
+    const [selectedState, setSelectedState] = useState("");
 
-	const [snackbarMessage, setSnackbarMessage] = useState("");
-	const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-	const [openSnackbar, setOpenSnackbar] = useState(false);
-	const [confirmOpen, setConfirmOpen] = useState(false);
-	const [formData, setFormData] = useState(null); // To hold form data before confirmation
-	const [courseData, setCourseData] = useState(null); // To hold fetched course data
+    const [artFormOptions] = useState([
+        "Tribal Painting",
+        "Tribal Dance",
+        "Tribal Clothing and Textile",
+        "Tribal Artifacts",
+        "Tribal Livelihood",
+    ]);
 
-	// Fetch course by ID, similar to EditRepoContent
-	useEffect(() => {
-		const fetchCourse = async () => {
-			try {
-				const res = await APIClient.get(`${apis.GetCourseById}/${id}`);
-				const data = res.data; // Directly use res.data
-				setCourseData(data); // Store fetched data
-				reset({
-					// Use reset instead of setValue
-					coursename: data.coursename,
-					intro: data.intro,
-					coursetype: data.coursetype,
-					introvideo: data.introvideo, // Keep these, reset will handle correctly.
-					coursethumbnail: data.coursethumbnail,
-				});
-			} catch (err) {
-				console.error("Failed to fetch course", err);
-				setSnackbarMessage("Failed to load course data.");
-				setSnackbarSeverity("error");
-				setOpenSnackbar(true);
-			}
-		};
-		fetchCourse();
-	}, [id, reset]);
+    useEffect(() => {
+        const fetchStates = async () => {
+            try {
+                const res = await APIClient.get("/api/Tribes");
+                const data = res.data;
+                const uniqueStates = [...new Set(data.map(item => item.state))];
+                setStateOptions(uniqueStates);
+            } catch (error) {
+                console.error("Failed to fetch states:", error);
+                setSnackbarMessage("Failed to fetch states.");
+                setSnackbarSeverity("error");
+                setOpenSnackbar(true);
+            }
+        };
+        fetchStates();
+    }, []);
 
-	const handleFormSubmit = (data) => {
-		//  No changes needed here, captures form data.
-		setFormData(data);
-		setConfirmOpen(true);
-	};
+    useEffect(() => {
+        const fetchCourseData = async () => {
+            try {
+                const res = await APIClient.get(apis.GetCourseById + id);
+                const data = res.data;
+                setCourseData(data);
+                setValue("coursename", data.coursename);
+                setValue("intro", data.intro);
+                setValue("coursetype", data.coursetype);
+                setValue("state", data.state);
+                setSelectedState(data.state);
+                setValue("artform", data.artform);
+                setValue("video_path", data.video_path);
+                setValue("thumbnail_path", data.thumbnail_path);
+                
+            } catch (error) {
+                console.error("Failed to fetch course data:", error);
+                setSnackbarMessage("Failed to fetch course data.");
+                setSnackbarSeverity("error");
+                setOpenSnackbar(true);
+            }
+        };
+        if (id) {
+            fetchCourseData();
+        }
+    }, [id, setValue]);
 
-	const handleConfirmSubmit = async () => {
-		setConfirmOpen(false);
+    useEffect(() => {
+        const fetchTribes = async () => {
+            if (!selectedState) {
+                setTribeOptions([]);
+                setValue("tribe", "");
+                return;
+            }
+            try {
+                const res = await APIClient.get(`/api/Tribes/getbyid/${encodeURIComponent(selectedState)}`);
+                const tribes = res.data.map(item => item.tribename);
+                setTribeOptions(tribes);
 
-		if (!formData) {
-			setSnackbarMessage("Submission failed. Missing form data.");
-			setSnackbarSeverity("error");
-			setOpenSnackbar(true);
-			return;
-		}
+                if (courseData && tribes.includes(courseData.tribe)) {
+                    setValue("tribe", courseData.tribe);
+                } else if (courseData && selectedState === courseData.state && !tribes.includes(courseData.tribe)) {
+                    setTribeOptions([...tribes, courseData.tribe]);
+                    setValue("tribe", courseData.tribe);
+                }
+            } catch (error) {
+                console.error("Failed to fetch tribes:", error);
+                setTribeOptions([]);
+                setValue("tribe", "");
+                setSnackbarMessage("Failed to fetch tribes for the selected state.");
+                setSnackbarSeverity("error");
+                setOpenSnackbar(true);
+            }
+        };
+        fetchTribes();
+    }, [selectedState, setValue, courseData]);
 
-		const formDataToSend = new FormData();
-		formDataToSend.append("id", id);
-		formDataToSend.append("coursename", formData.coursename);
-		formDataToSend.append("intro", formData.intro);
-		formDataToSend.append("coursetype", formData.coursetype);
+    const handleStateChange = (event) => {
+        setSelectedState(event.target.value);
+        setValue("tribe", "");
+    };
 
-		if (formData.introvideo && formData.introvideo[0]) {
-			// Changed to check for file
-			formDataToSend.append("introvideo", formData.introvideo[0]);
-		} else if (courseData?.introvideo) {
-			formDataToSend.append("introvideo", courseData.introvideo);
-		}
+    const handleFormSubmit = (data) => {
+        setFormData(data);
+        setConfirmOpen(true);
+    };
 
-		if (formData.coursethumbnail && formData.coursethumbnail[0]) {
-			// Changed to check for file
-			formDataToSend.append("coursethumbnail", formData.coursethumbnail[0]);
-		} else if (courseData?.coursethumbnail) {
-			formDataToSend.append("coursethumbnail", courseData.coursethumbnail);
-		}
+    const handleConfirmSubmit = async () => {
+        setConfirmOpen(false);
+        const formDataToSend = new FormData();
 
-		try {
-			const response = await APIClient.post(apis.UpdateCourse, formDataToSend, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			});
+        formDataToSend.append("coursename", formData.coursename);
+        formDataToSend.append("intro", formData.intro);
+        formDataToSend.append("coursetype", formData.coursetype);
+        formDataToSend.append("state", formData.state);
+        formDataToSend.append("tribe", formData.tribe);
+        formDataToSend.append("artform", formData.artform);
 
-			if (response.status === 200) {
-				// Check for 200 OK
-				setSnackbarMessage("Course updated successfully!");
-				setSnackbarSeverity("success");
-				navigate("/CourseList");
-			} else {
-				throw new Error(`Update failed: ${response.status}`); // Include status
-			}
-		} catch (err) {
-			console.error(err);
-			setSnackbarMessage(`Update failed: ${err.message || "Unknown error"}`);
-			setSnackbarSeverity("error");
-		} finally {
-			setOpenSnackbar(true);
-		}
-	};
+        // Handle intro video
+        if (formData.introvideo && formData.introvideo[0]) {
+            formDataToSend.append("introvideo", formData.introvideo[0]);
+        } else if (courseData?.video_path) {
+            const filename = courseData.video_path.split("/").pop();
+            formDataToSend.append("introvideo_name", filename);
+            console.log("Existing video filename:", filename);
+        }
 
-	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Edit Course</h2>
-			<form
-				onSubmit={handleSubmit(handleFormSubmit)}
-				encType="multipart/form-data"
-			>
-				{/* Course Name */}
-				<FormControl fullWidth margin="normal" error={!!errors.coursename}>
-					<InputLabel htmlFor="coursename">Course Name</InputLabel>
-					<Input
-						id="coursename"
-						{...register("coursename", { required: "Course name is required" })}
-						className="w-full p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-					{errors.coursename && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.coursename.message}
-						</p>
-					)}
-				</FormControl>
+        // Handle course thumbnail
+        if (formData.coursethumbnail && formData.coursethumbnail[0]) {
+            formDataToSend.append("coursethumbnail", formData.coursethumbnail[0]);
+        } else if (courseData?.thumbnail_path) {
+            const filename = courseData.thumbnail_path.split("/").pop();
+            formDataToSend.append("coursethumbnail_name", filename);
+            console.log("Existing thumbnail filename:", filename);
+        }
 
-				{/* Introduction */}
-				<FormControl fullWidth margin="normal" error={!!errors.intro}>
-					<InputLabel htmlFor="intro">Introduction</InputLabel>
-					<Input
-						id="intro"
-						multiline
-						rows={4}
-						{...register("intro", { required: "Introduction is required" })}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-					{errors.intro && (
-						<p className="text-red-500 text-sm mt-1">{errors.intro.message}</p>
-					)}
-				</FormControl>
+        try {
+            const response = await APIClient.post(apis.UpdateCourse + id, formDataToSend, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
 
-				{/* Intro Video */}
-				<FormControl fullWidth margin="normal">
-					<InputLabel htmlFor="introvideo">Change Intro Video</InputLabel>
-					<Input
-						type="file"
-						id="introvideo"
-						accept="video/*"
-						{...register("introvideo")}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-				</FormControl>
+            if (response.status === 200) {
+                setSnackbarMessage("Course updated successfully!");
+                setSnackbarSeverity("success");
+            } else {
+                throw new Error("Update failed");
+            }
+        } catch (error) {
+            console.error("Update error:", error);
+            setSnackbarMessage("Failed to update course.");
+            setSnackbarSeverity("error");
+        } finally {
+            setOpenSnackbar(true);
+        }
+    };
 
-				{/* Thumbnail */}
-				<FormControl fullWidth margin="normal">
-					<InputLabel htmlFor="coursethumbnail">
-						Change Course Thumbnail
-					</InputLabel>
-					<Input
-						type="file"
-						id="coursethumbnail"
-						accept="image/*"
-						{...register("coursethumbnail")}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-				</FormControl>
+    useEffect(() => {
+        const subscription = watch(({ state }) => {
+            if (state) {
+                setSelectedState(state);
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [watch]);
 
-				{/* Course Type */}
-				<FormControl fullWidth margin="normal" error={!!errors.coursetype}>
-					<InputLabel htmlFor="coursetype">Course Type</InputLabel>
-					<select
-						id="coursetype"
-						{...register("coursetype", {
-							required: "Please select a course type",
-						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					>
-						<option value="">Select</option>
-						<option value="Advanced">Advanced</option>
-						<option value="Beginner">Beginner</option>
-					</select>
-					{errors.coursetype && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.coursetype.message}
-						</p>
-					)}
-				</FormControl>
+    if (!courseData) {
+        return <div>Loading course data...</div>;
+    }
 
-				<Button
-					variant="contained"
-					color="primary"
-					type="submit"
-					sx={{ mt: 2 }}
-				>
-					Update
-				</Button>
-			</form>
+    return (
+        <div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
+            <h2 className="text-2xl font-bold mb-6 text-center">Edit Course</h2>
+            <form onSubmit={handleSubmit(handleFormSubmit)} encType="multipart/form-data">
+                {/* Course Name */}
+                <div className="mb-4">
+                    <label htmlFor="coursename" className="mb-1 font-medium text-black">Course Name</label>
+                    <input
+                        type="text"
+                        id="coursename"
+                        {...register("coursename", { required: "Course name is required" })}
+                        className="w-full border p-2 rounded"
+                    />
+                    {errors.coursename && <p className="text-red-500 text-sm">{errors.coursename.message}</p>}
+                </div>
 
-			<Snackbar
-				open={openSnackbar}
-				autoHideDuration={6000}
-				onClose={() => setOpenSnackbar(false)}
-			>
-				<Alert
-					onClose={() => setOpenSnackbar(false)}
-					severity={snackbarSeverity}
-					sx={{ width: "100%" }}
-				>
-					{snackbarMessage}
-				</Alert>
-			</Snackbar>
+                {/* Introduction */}
+                <div className="mb-4">
+                    <label htmlFor="intro" className="mb-1 font-medium text-black">Introduction</label>
+                    <textarea
+                        id="intro"
+                        rows="4"
+                        {...register("intro", { required: "Introduction is required" })}
+                        className="w-full border p-2 rounded"
+                    />
+                    {errors.intro && <p className="text-red-500 text-sm">{errors.intro.message}</p>}
+                </div>
 
-			<ConfirmDialog
-				open={confirmOpen}
-				onClose={() => setConfirmOpen(false)}
-				onConfirm={handleConfirmSubmit}
-			/>
-		</div>
-	);
+                {/* Introduction Video */}
+                <div className="mb-4">
+                    <label htmlFor="introvideo" className="mb-1 font-medium text-black">Introduction Video</label>
+                    {courseData.video_path && (
+                        <video
+                            src={`${APIClient.defaults.baseURL}/${courseData.video_path}`}
+                            controls
+                            className="w-full mb-2 rounded"
+                            style={{ maxHeight: '200px' }}
+                        />
+                    )}
+                    <input
+                        type="file"
+                        id="introvideo"
+                        accept="video/*"
+                        {...register("introvideo")}
+                        className="w-full border p-2 rounded"
+                    />
+                    <p className="text-gray-600 text-sm mt-1">Leave blank to keep the existing video.</p>
+                </div>
+
+                {/* Course Thumbnail */}
+                <div className="mb-4">
+                    <label htmlFor="coursethumbnail" className="mb-1 font-medium text-black">Course Thumbnail</label>
+                    {courseData.thumbnail_path && (
+                        <img
+                            src={`${APIClient.defaults.baseURL}/${courseData.thumbnail_path}`}
+                            alt="Course Thumbnail"
+                            className="w-full mb-2 rounded"
+                            style={{ maxHeight: '150px', objectFit: 'cover' }}
+                        />
+                    )}
+                    <input
+                        type="file"
+                        id="coursethumbnail"
+                        accept="image/*"
+                        {...register("coursethumbnail")}
+                        className="w-full border p-2 rounded"
+                    />
+                    <p className="text-gray-600 text-sm mt-1">Leave blank to keep the existing thumbnail.</p>
+                </div>
+
+                {/* Course Type */}
+                <div className="mb-4">
+                    <label htmlFor="coursetype" className="mb-1 font-medium text-black">Course Type</label>
+                    <select
+                        id="coursetype"
+                        {...register("coursetype", { required: "Please select a course type" })}
+                        className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="">Select</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Beginner">Beginner</option>
+                    </select>
+                    {errors.coursetype && <p className="text-red-500 text-sm mt-1">{errors.coursetype.message}</p>}
+                </div>    
+
+                 {/* State Dropdown */}
+                <div className="mb-4">
+                    <label className="mb-1 font-medium text-black">State</label>
+                    <select
+                        {...register("state", { required: "Please select a state" })}
+                        className="w-full border border-gray-300 p-2 rounded"
+                        onChange={handleStateChange}
+                        defaultValue={courseData ? courseData.state : ""} // Set default value from courseData
+                    >
+                        <option value="">Select State</option>
+                        {stateOptions.map(state => (
+                            <option key={state} value={state}>{state}</option>
+                        ))}
+                    </select>
+                    {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>}
+                </div>
+
+                {/* Tribe Dropdown */}
+                <div className="mb-4">
+                    <label className="mb-1 font-medium text-black">Tribe</label>
+                    <select
+                        {...register("tribe", { required: "Please select a tribe" })}
+                        className="w-full border border-gray-300 p-2 rounded"
+                        defaultValue={courseData ? courseData.tribe : ""} // Set default value from courseData
+                    >
+                        <option value="">Select Tribe</option>
+                        {tribeOptions.map(tribe => (
+                            <option key={tribe} value={tribe}>{tribe}</option>
+                        ))}
+                    </select>
+                    {errors.tribe && <p className="text-red-500 text-sm mt-1">{errors.tribe.message}</p>}
+                </div>
+
+                {/* Art Form Dropdown */}
+                <div className="mb-4">
+                    <label className="mb-1 font-medium text-black">Art Form</label>
+                    <select
+                        {...register("artform", { required: "Please select an art form" })}
+                        className="w-full border border-gray-300 p-2 rounded"
+                        defaultValue={courseData ? courseData.artform : ""} // Set default value from courseData
+                    >
+                        <option value="">Select Art Form</option>
+                        {artFormOptions.map(form => (
+                            <option key={form} value={form}>{form}</option>
+                        ))}
+                    </select>
+                    {errors.artform && <p className="text-red-500 text-sm mt-1">{errors.artform.message}</p>}
+                </div>    
+
+                {/* Confirm Button */}
+                <div className="text-center">
+                    <Button type="submit" variant="contained" color="primary">Update Course</Button>
+                </div>
+            </form>
+
+            <ConfirmDialog
+                open={confirmOpen}
+                onClose={() => setConfirmOpen(false)}
+                onConfirm={handleConfirmSubmit}
+                message="Are you sure you want to update this course?"
+            />
+
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={() => setOpenSnackbar(false)}>
+                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+        </div>
+    );
 };
 
 export default EditCourse;

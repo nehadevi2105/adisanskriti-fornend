@@ -2,13 +2,14 @@
 	"AddCourseForm": "/api/Course",
 	"AddCourseList": "/api/Course",
 	"DeleteCourse": "/api/CoreValues/delete",
-	"UpdateCourse": "/api/Course/Updatecourse/",
-	"GetCourseById": "/api/Course/GetById",
+	"UpdateCourse": "/api/Course/update/",
+	"GetCourseById": "/api/Course/GetById/",
 
 	"AddCoreValueForm": "/api/CoreValues",
 	"GetCoreValuesList": "/api/CoreValues",
 	"DeleteCoreValue": "/api/CoreValues/delete/",
 	"GetCoreValuesById": "/api/CoreValues/GetById/",
+	"UpdateCoreValueForm": "/api/CoreValues/update/",
 
 	"AddAdiSampadaForm": "/api/Sampadaslider",
 	"GetAdiSampadaList": "/api/Sampadaslider",
