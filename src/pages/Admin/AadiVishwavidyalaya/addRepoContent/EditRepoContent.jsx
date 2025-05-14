@@ -79,6 +79,7 @@ const EditRepoContent = () => {
 	]);
 
 	const [formData, setFormData] = useState(null);
+	const [repoData, setRepoData] = useState(null);
 	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState("");
 	const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -104,17 +105,64 @@ const EditRepoContent = () => {
 			.catch((err) => console.error("Failed to fetch themes", err));
 	}, []);
 
-	useEffect(() => {
-		// Fetching tribes based on selected state
-		if (selectedState) {
-			APIClient.get(apis.TribebyState + selectedState)
-				.then((res) => {
-					setTribeOptions(res.data || []);
-					setValue("tribe", ""); // reset tribe when state changes
-				})
-				.catch((err) => console.error("Failed to fetch tribes", err));
-		}
-	}, [selectedState, setValue]);
+	// useEffect(() => {
+	// 	// Fetching tribes based on selected state
+	// 	if (selectedState) {
+	// 		APIClient.get(apis.TribebyState + selectedState)
+	// 			.then((res) => {
+	// 				setTribeOptions(res.data || []);
+	// 				setValue("tribe", ""); // reset tribe when state changes
+	// 			})
+	// 			.catch((err) => console.error("Failed to fetch tribes", err));
+	// 	}
+	// }, [selectedState, setValue]);
+	// useEffect(() => {
+	// 	const fetchTribes = async () => {
+	// 	  if (!selectedState) return;
+	// 	  try {
+	// 		const res = await APIClient.get(`/api/Tribes/getbyid/${selectedState}`);
+	// 		setTribeOptions(res.data); // Keep full object
+	// 		setValue("tribe", ""); // Reset tribe on state change
+	// 	  } catch (err) {
+	// 		console.error("Failed to fetch tribes", err);
+	// 	  }
+	// 	};
+	// 	fetchTribes();
+	//   }, [selectedState, setValue]);
+		useEffect(() => {
+			const fetchTribes = async () => {
+				if (!selectedState) {
+					setTribeOptions([]);
+					setValue("tribe", "");
+					return;
+				}
+				try {
+					const res = await APIClient.get(`/api/Tribes/getbyid/${encodeURIComponent(selectedState)}`);
+					const tribes = res.data.map(item => ({
+						id: item.id,
+						name: item.tribename
+					}));
+
+					setTribeOptions(tribes);
+	
+					if (repoData && tribes.includes(repoData.tribe)) {
+						setValue("tribe", repoData.tribe);
+					} else if (repoData && selectedState === repoData.state && !tribes.includes(repoData.tribe)) {
+						setTribeOptions([...tribes, repoData.tribe]);
+						setValue("tribe", repoData.tribe);
+					}
+				} catch (error) {
+					console.error("Failed to fetch tribes:", error);
+					setTribeOptions([]);
+					setValue("tribe", "");
+					setSnackbarMessage("Failed to fetch tribes for the selected state.");
+					setSnackbarSeverity("error");
+					setOpenSnackbar(true);
+				}
+			};
+			fetchTribes();
+		}, [selectedState, setValue, repoData]);
+	  
 
 	useEffect(() => {
 		// Fetching data by ID for editing
@@ -162,7 +210,7 @@ const EditRepoContent = () => {
 		}
 
 		try {
-			await APIClient.post(apis.updateRepoContent, formData);
+			await APIClient.post(apis.updateRepoContent+id, formData);
 			setSnackbarMessage("Repo content updated successfully!");
 			setSnackbarSeverity("success");
 		} catch (err) {
@@ -287,11 +335,14 @@ const EditRepoContent = () => {
 						render={({ field }) => (
 							<Select {...field} label="Tribe">
 								<MenuItem value="">Select Tribe</MenuItem>
+								{/* Display tribes based on selected state */}
 								{tribeOptions.map((tribe) => (
-									<MenuItem key={tribe.id} value={tribe.tribe}>
-										{tribe.tribe}
-									</MenuItem>
+								<MenuItem key={tribe.id} value={tribe.id}>
+									{tribe.name}
+								</MenuItem>
+								
 								))}
+
 							</Select>
 						)}
 					/>

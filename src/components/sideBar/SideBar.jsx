@@ -593,16 +593,17 @@ const SideBar = () => {
 							</Link>
 						</li> */}
 						<li>
-							<Link to="/site-error">
+							<Link to="/CulturalHeritageForm">
 								<button
-									className={` ${activeTab === 19 ? "active" : ""} `}
-									onClick={() => isOpenSubmenu(19)}
+									type="button"
+									className={` ${activeTab === 18 ? "active" : ""} `}
+									onClick={() => isOpenSubmenu(18)}
 								>
 									<span className="icon">
 										{" "}
 										<MdError />{" "}
 									</span>
-									site error
+									Cultural Heritage Form
 								</button>
 							</Link>
 						</li>
