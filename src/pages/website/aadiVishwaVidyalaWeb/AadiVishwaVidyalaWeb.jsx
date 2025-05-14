@@ -25,7 +25,7 @@ const AadiVishwaVidyalaWeb = () => {
 											>
 												<video className="slide__video" autoPlay loop muted>
 													<source
-														src="src/img/Aadi-Vishwa-Vidyalaya-30th-Jan.mp4"
+														// src="src/img/Aadi-Vishwa-Vidyalaya-30th-Jan.mp4"
 														type="video/mp4"
 													/>
 													Your browser does not support the video tag.
