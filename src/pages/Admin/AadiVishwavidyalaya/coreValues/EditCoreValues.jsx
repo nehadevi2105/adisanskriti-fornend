@@ -6,6 +6,7 @@ import { Button, Snackbar, Alert } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
+import styles from "./CoreValueForm.module.css";
 
 const EditCoreValues = () => {
 	const { id } = useParams();
@@ -28,26 +29,29 @@ const EditCoreValues = () => {
 	const [confirmOpen, setConfirmOpen] = useState(false);
 	const [formData, setFormData] = useState(null);
 
-	const config = { readonly: false,toolbar: true,
-	spellcheck: true,
-	language: "en",
-	toolbarButtonSize: "medium",
-	showCharsCounter: true,
-	showWordsCounter: true,
-	height: 300,
-	buttons: [
-		"bold",
-		"italic",
-		"underline",
-		"|",
-		"ul",
-		"ol",
-		"|",
-		"image",
-		"link",
-		"|",
-		"source",],
-		 };
+	const config = {
+		readonly: false,
+		toolbar: true,
+		spellcheck: true,
+		language: "en",
+		toolbarButtonSize: "medium",
+		showCharsCounter: true,
+		showWordsCounter: true,
+		height: 300,
+		buttons: [
+			"bold",
+			"italic",
+			"underline",
+			"|",
+			"ul",
+			"ol",
+			"|",
+			"image",
+			"link",
+			"|",
+			"source",
+		],
+	};
 
 	// Fetch existing data
 	useEffect(() => {
@@ -122,15 +126,15 @@ const EditCoreValues = () => {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Edit Core Value</h2>
+		<div className={styles.container}>
+			<h2 className={styles.heading}>Edit Core Value</h2>
 			<form
 				onSubmit={handleSubmit(handleFormSubmit)}
 				encType="multipart/form-data"
 			>
 				{/* Description */}
-				<div className="mb-4">
-					<label htmlFor="description" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="description" className={styles.label}>
 						Description
 					</label>
 					<input
@@ -139,38 +143,34 @@ const EditCoreValues = () => {
 						{...register("Description", {
 							required: "Description is required",
 						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.input}
 					/>
 					{errors.Description && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.Description.message}
-						</p>
+						<p className={styles.error}>{errors.Description.message}</p>
 					)}
 				</div>
 
 				{/* Type */}
-				<div className="mb-4">
-					<label htmlFor="type" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="type" className={styles.label}>
 						Our Core Value
 					</label>
 					<select
 						id="type"
 						{...register("Type", { required: "Please select a type" })}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.select}
 					>
 						<option value="">Select</option>
 						<option value="vision">Vision</option>
 						<option value="mission">Mission</option>
 						<option value="planning">Planning</option>
 					</select>
-					{errors.Type && (
-						<p className="text-red-500 text-sm mt-1">{errors.Type.message}</p>
-					)}
+					{errors.Type && <p className={styles.error}>{errors.Type.message}</p>}
 				</div>
 
 				{/* Image Upload */}
-				<div className="mb-4">
-					<label htmlFor="image" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="image" className={styles.label}>
 						Change Image
 					</label>
 					<input
@@ -178,13 +178,12 @@ const EditCoreValues = () => {
 						id="image"
 						accept="image/*"
 						{...register("Image")}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.input}
 					/>
 					{existingImage && (
 						<div className="mt-2">
 							<p className="text-sm text-gray-500">Current Image:</p>
 							<img
-								/*src={existingImage}*/
 								src={`${APIClient.defaults.baseURL}/${existingImage}`}
 								alt="Current"
 								className="h-20 mt-1 rounded"
@@ -194,17 +193,26 @@ const EditCoreValues = () => {
 				</div>
 
 				{/* Content Editor */}
-				<div className="mb-4">
-					<label className="mb-1 font-medium text-black">Content</label>
-					<JoditEditor
-						ref={editor}
-						value={HtmlContent}
-						config={config}
-						onChange={(newContent) => setHtmlContent(newContent)}
-					/>
+				<div className={styles.formGroup}>
+					<label className={styles.label}>Content</label>
+					<div className={styles.joditEditor}>
+						<JoditEditor
+							ref={editor}
+							value={HtmlContent}
+							config={config}
+							onChange={(newContent) => setHtmlContent(newContent)}
+						/>
+					</div>
 				</div>
 
-				<Button variant="contained" color="primary" type="submit">
+				<Button
+					variant="contained"
+					color="primary"
+					type="submit"
+					className={styles.submitButton}
+				>
+					{" "}
+					{/* Use styles.submitButton */}
 					Update
 				</Button>
 			</form>

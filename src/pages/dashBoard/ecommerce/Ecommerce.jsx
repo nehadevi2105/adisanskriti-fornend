@@ -1,10 +1,23 @@
-
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { Chart } from "react-google-charts";
 
-// react icons 
-import { FaRegUserCircle ,FaShoppingBag, FaStar, FaTrashAlt, FaCalendarAlt, FaCheck } from "react-icons/fa";
-import { FaCartArrowDown, FaArrowTrendUp, FaRegEye,  FaAngleLeft, FaAngleRight, FaPlus } from "react-icons/fa6";
+// react icons
+import {
+	FaRegUserCircle,
+	FaShoppingBag,
+	FaStar,
+	FaTrashAlt,
+	FaCalendarAlt,
+	FaCheck,
+} from "react-icons/fa";
+import {
+	FaCartArrowDown,
+	FaArrowTrendUp,
+	FaRegEye,
+	FaAngleLeft,
+	FaAngleRight,
+	FaPlus,
+} from "react-icons/fa6";
 import { TbStars } from "react-icons/tb";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { FiEdit } from "react-icons/fi";
@@ -14,65 +27,58 @@ import { MdOutlineLayers } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { PiWarningLight } from "react-icons/pi";
 
-// components 
-import jama from "../../../assets//img/jama.webp"
+// components
+import jama from "../../../assets//img/jama.webp";
 import DashBoardBox from "../../../components/dashboardBox/DashBoardBox";
 import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
 
-
 export const data = [
-  ["Task", "Hours per Day"],
-  ["Work", 11],
-  ["Eat", 2],
-  ["Commute", 2],
-  ["Watch TV", 2],
-  ["Sleep", 7],
+	["Task", "Hours per Day"],
+	["Work", 11],
+	["Eat", 2],
+	["Commute", 2],
+	["Watch TV", 2],
+	["Sleep", 7],
 ];
 
 export const options = {
-  backgroundColor: 'transparent',
-  'chartArea' : {'height': "100%", 'width' :'90%'}
+	backgroundColor: "transparent",
+	chartArea: { height: "100%", width: "90%" },
 };
 
-
 export const data2 = [
-  ["Task", "Hours per Day"],
-  ["Work", 11],
-  ["Eat", 2],
-  ["Commute", 2],
-  ["Watch TV", 2],
-  ["Sleep", 7], // CSS-style declaration
+	["Task", "Hours per Day"],
+	["Work", 11],
+	["Eat", 2],
+	["Commute", 2],
+	["Watch TV", 2],
+	["Sleep", 7], // CSS-style declaration
 ];
 
 export const options2 = {
-  pieHole: 0.4,
-  is3D: false,
-  'chartArea' : {'height': "100%", 'width' :'90%'}
+	pieHole: 0.4,
+	is3D: false,
+	chartArea: { height: "100%", width: "90%" },
 };
 
-
 export const data3 = [
-  ["Year", "Sales", "Expenses", "Profit"],
-  ["2014", 1000, 400, 200],
-  ["2015", 1170, 460, 250],
-  ["2016", 660, 1120, 300],
-  ["2017", 1030, 540, 350],
+	["Year", "Sales", "Expenses", "Profit"],
+	["2014", 1000, 400, 200],
+	["2015", 1170, 460, 250],
+	["2016", 660, 1120, 300],
+	["2017", 1030, 540, 350],
 ];
-
 
 import "./Ecommerce.css";
 
 const Ecommerce = () => {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
-
-  useEffect(() => {
-    window.scrollTo(0,0)
-  }, []);   
-
-
-  return (
-    <>
-      <div className="right-content">
+	return (
+		<>
+			{/* <div className="right-content">
         <BreadCrumb title={"Ecommerce"} page={"DashBoard"}/>
 
         <div className="row dashboard-div">
@@ -546,25 +552,9 @@ const Ecommerce = () => {
             </div>
           </div>
         </div>
-      </div>   
-    </>
-  )
-}
+      </div>    */}
+		</>
+	);
+};
 
-export default Ecommerce
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default Ecommerce;

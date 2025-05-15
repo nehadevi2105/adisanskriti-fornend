@@ -4,7 +4,7 @@ import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import { TextField, Button, Snackbar, Alert } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx"; // Adjust path as needed
-
+import styles from "./QuestionsForm.module.css"; // Import the CSS module
 
 const QuestionsForm = () => {
 	const {
@@ -95,11 +95,17 @@ const QuestionsForm = () => {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Add Question</h2>
-			<form onSubmit={handleSubmit(handleFormSubmit)}>
-				<div className="mb-4">
-					<label htmlFor="course" className="mb-1 font-medium text-black block">
+		<div className={styles.container}>
+			{" "}
+			{/* Use the container class */}
+			<h2 className={styles.heading}>Add Question</h2> {/* Use heading class */}
+			<form onSubmit={handleSubmit(handleFormSubmit)} className={styles.form}>
+				{" "}
+				{/* Use form class */}
+				<div className={styles.formGroup}>
+					{" "}
+					{/* Use formGroup class */}
+					<label htmlFor="course" className={styles.label}>
 						Course
 					</label>
 					<Controller
@@ -110,11 +116,15 @@ const QuestionsForm = () => {
 							<select
 								{...field}
 								id="course"
-								className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+								className={styles.select} // Use select class
 							>
 								<option value="">Select</option>
 								{courses.map((course) => (
-									<option key={course.id} value={course.id}>
+									<option
+										key={course.id}
+										value={course.id}
+										className={styles.menuItem}
+									>
 										{course.coursename}
 									</option>
 								))}
@@ -122,15 +132,11 @@ const QuestionsForm = () => {
 						)}
 					/>
 					{errors.course && (
-						<p className="text-red-500 text-sm mt-1">{errors.course.message}</p>
+						<p className={styles.error}>{errors.course.message}</p> // Use error class
 					)}
 				</div>
-
-				<div className="mb-4">
-					<label
-						htmlFor="ModuleName"
-						className="mb-1 font-medium text-black block"
-					>
+				<div className={styles.formGroup}>
+					<label htmlFor="ModuleName" className={styles.label}>
 						Course Module
 					</label>
 					<Controller
@@ -138,14 +144,14 @@ const QuestionsForm = () => {
 						control={control}
 						rules={{ required: "Course Module is required" }}
 						render={({ field }) => (
-							<select
-								{...field}
-								id="ModuleName"
-								className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-							>
+							<select {...field} id="ModuleName" className={styles.select}>
 								<option value="">Select</option>
 								{modules.map((mod) => (
-									<option key={mod.id} value={mod.id}>
+									<option
+										key={mod.id}
+										value={mod.id}
+										className={styles.menuItem}
+									>
 										{mod.modulename}
 									</option>
 								))}
@@ -153,17 +159,11 @@ const QuestionsForm = () => {
 						)}
 					/>
 					{errors.ModuleName && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.ModuleName.message}
-						</p>
+						<p className={styles.error}>{errors.ModuleName.message}</p>
 					)}
 				</div>
-
-				<div className="mb-4">
-					<label
-						htmlFor="questionText"
-						className="mb-1 font-medium text-black block"
-					>
+				<div className={styles.formGroup}>
+					<label htmlFor="questionText" className={styles.label}>
 						Question Text
 					</label>
 					<Controller
@@ -175,33 +175,27 @@ const QuestionsForm = () => {
 								{...field}
 								id="questionText"
 								rows="3"
-								className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+								className={styles.textarea} // Use textarea class
 							/>
 						)}
 					/>
 					{errors.questionText && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.questionText.message}
-						</p>
+						<p className={styles.error}>{errors.questionText.message}</p>
 					)}
 				</div>
-
-				<div className="mb-4">
+				<div className={styles.mb4}>
 					<Button
 						variant="outlined"
 						onClick={() => setShowOptions(!showOptions)}
+						className={styles.button}
 					>
 						{showOptions ? "Hide Options" : "Show Options"}
 					</Button>
 				</div>
-
 				{showOptions &&
 					options.map((opt, index) => (
-						<div className="mb-4" key={index}>
-							<label
-								htmlFor={`option${index + 1}`}
-								className="mb-1 font-medium text-black block"
-							>
+						<div className={styles.formGroup} key={index}>
+							<label htmlFor={`option${index + 1}`} className={styles.label}>
 								Option {index + 1}
 							</label>
 							<TextField
@@ -210,20 +204,16 @@ const QuestionsForm = () => {
 								onChange={(e) => handleOptionChange(index, e.target.value)}
 								fullWidth
 								required={showOptions} // Require options only when visible
-								className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+								className={styles.input} // Use input class
 							/>
 						</div>
 					))}
 				{showOptions && errors.options && (
-					<p className="text-red-500 text-sm mt-1">{errors.options.message}</p>
+					<p className={styles.error}>{errors.options.message}</p>
 				)}
-
 				{showOptions && (
-					<div className="mb-4">
-						<label
-							htmlFor="correctAnswer"
-							className="mb-1 font-medium text-black block"
-						>
+					<div className={styles.formGroup}>
+						<label htmlFor="correctAnswer" className={styles.label}>
 							Correct Answer
 						</label>
 						<Controller
@@ -236,25 +226,26 @@ const QuestionsForm = () => {
 									id="correctAnswer"
 									fullWidth
 									required
-									className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+									className={styles.input}
 								/>
 							)}
 						/>
 						{errors.correctAnswer && (
-							<p className="text-red-500 text-sm mt-1">
-								{errors.correctAnswer.message}
-							</p>
+							<p className={styles.error}>{errors.correctAnswer.message}</p>
 						)}
 					</div>
 				)}
-
 				<div>
-					<Button type="submit" variant="contained" color="primary">
+					<Button
+						type="submit"
+						variant="contained"
+						color="primary"
+						className={styles.submitButton}
+					>
 						Save
 					</Button>
 				</div>
 			</form>
-
 			<Snackbar
 				open={openSnackbar}
 				autoHideDuration={6000}
@@ -268,7 +259,6 @@ const QuestionsForm = () => {
 					{snackbarMessage}
 				</Alert>
 			</Snackbar>
-
 			<ConfirmDialog
 				open={confirmOpen}
 				onClose={() => setConfirmOpen(false)}

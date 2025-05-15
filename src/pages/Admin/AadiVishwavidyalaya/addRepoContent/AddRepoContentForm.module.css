@@ -1,0 +1,124 @@
+.container {
+    width: 100%;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+     border: 1px solid #a0aec0; 
+}
+
+.heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.formControl {
+    margin-bottom: 1rem;
+}
+
+.label {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: #000000;
+    display: block;
+}
+
+.select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.select:focus {
+    box-shadow: 0 0 0 2px #60a5fa;
+    border-color: #60a5fa;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    outline: none;
+    margin-top: 0.25rem;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    box-shadow: 0 0 0 2px #60a5fa;
+    border-color: #60a5fa;
+}
+
+.formHelperText {
+    color: #dc2626;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.editorWrapper {
+    margin-top: 1.5rem;
+}
+
+.editorLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.submitButton {
+    margin-top: 1.5rem;
+    background-color: #1976d2;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+    background-color: #1565c0;
+}
+
+.resetButton {
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    transition: background-color 0.3s ease;
+}
+
+.resetButton:hover {
+    background-color: #f3f4f6;
+}
+
+.testButton {
+    margin-top: 1rem;
+    color: #1976d2;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
