@@ -13,6 +13,7 @@ import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import { Snackbar, Alert } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx";
+import styles from "./AdiSanskritiForm.module.css"; // Import the CSS module
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
@@ -132,7 +133,7 @@ const AdiSanskritiForm = () => {
 				formDataToSend,
 				{
 					headers: { "Content-Type": "multipart/form-data" },
-				}
+				},
 			);
 			console.log(response.data);
 
@@ -161,66 +162,14 @@ const AdiSanskritiForm = () => {
 		}
 	};
 
-	// const onSubmit = (data) => {
-	// 	const formDataToSend = new FormData();
-
-	// 	// Append files per field
-	// 	for (const key of Object.keys(fileData)) {
-	// 		for (const file of fileData[key]) {
-	// 			formData.append(key, file);
-	// 		}
-	// 	}
-
-	// 	setFormData(formDataToSend); // Save data for confirmation step
-	// 	console.log("Confirm dialog should open now");
-
-	// 	setConfirmOpen(true); // Open confirmation dialog
-	// };
-
-	// const handleConfirmSubmit = async () => {
-	// 	setConfirmOpen(false);
-
-	// 	if (!formData) {
-	// 		setSnackbarMessage("Submission failed due to internal error.");
-	// 		setSnackbarSeverity("error");
-	// 		setOpenSnackbar(true);
-	// 		return;
-	// 	}
-
-	// 	try {
-	// 		const response = await APIClient.post(apis.AddAdiSanskriti, formData, {
-	// 			headers: { "Content-Type": "multipart/form-data" },
-	// 		});
-
-	// 		if (response.status === 200) {
-	// 			setSnackbarMessage("Form submitted successfully!");
-	// 			setSnackbarSeverity("success");
-	// 			reset();
-	// 			setFileData({
-	// 				Aadivishwavidyalaya_Images: [],
-	// 				Aadisampada_Images: [],
-	// 				Aadihaat_Images: [],
-	// 			});
-	// 			setPreviews({
-	// 				Aadivishwavidyalaya_Images: [],
-	// 				Aadisampada_Images: [],
-	// 				Aadihaat_Images: [],
-	// 			});
-	// 		} else {
-	// 			throw new Error("Submission failed");
-	// 		}
-	// 	} catch (error) {
-	// 		setSnackbarMessage("Submission failed.");
-	// 		setSnackbarSeverity("error");
-	// 	} finally {
-	// 		setOpenSnackbar(true);
-	// 	}
-	// };
-
 	const renderUploadSection = (label, fieldName) => (
-		<Box sx={{ mt: 2 }}>
-			<InputLabel>{label}</InputLabel>
-			<Button variant="contained" component="label" sx={{ mt: 1 }}>
+		<Box className={styles.uploadSection}>
+			<InputLabel className={styles.label}>{label}</InputLabel>
+			<Button
+				variant="contained"
+				component="label"
+				className={styles.uploadButton}
+			>
 				Upload Images
 				<input
 					type="file"
@@ -232,24 +181,19 @@ const AdiSanskritiForm = () => {
 			</Button>
 
 			{previews[fieldName]?.length > 0 && (
-				<Box sx={{ display: "flex", gap: 2, mt: 2, flexWrap: "wrap" }}>
+				<Box className={styles.previewContainer}>
 					{previews[fieldName].map((file, idx) => (
-						<Box key={idx} sx={{ position: "relative" }}>
+						<Box key={idx} className={styles.previewItem}>
 							<img
 								src={file.url}
 								alt={file.name}
-								style={{ width: "75px", height: "auto", borderRadius: 4 }}
+								className={styles.previewImage}
 							/>
 							<IconButton
 								size="small"
 								color="error"
 								onClick={() => handleRemoveImage(fieldName, idx)}
-								sx={{
-									position: "absolute",
-									top: -10,
-									right: -10,
-									backgroundColor: "#fff",
-								}}
+								className={styles.removeButton}
 							>
 								<DeleteIcon fontSize="small" />
 							</IconButton>
@@ -261,15 +205,13 @@ const AdiSanskritiForm = () => {
 	);
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
+		<div className={styles.container}>
 			<Box
 				component="form"
 				onSubmit={handleSubmit(onSubmit)}
-				sx={{ p: 3, display: "flex", flexDirection: "column", gap: 3 }}
+				className={styles.form}
 			>
-				<h2 className="text-2xl font-bold mb-6 text-center">
-					AdiSanskriti Form
-				</h2>
+				<h2 className={styles.heading}>AdiSanskriti Form</h2>
 
 				<TextField
 					label="Description"
@@ -278,6 +220,7 @@ const AdiSanskritiForm = () => {
 					error={!!errors.Description}
 					helperText={errors.Description?.message}
 					fullWidth
+					className={styles.input}
 				/>
 
 				{renderUploadSection(
@@ -287,7 +230,12 @@ const AdiSanskritiForm = () => {
 				{renderUploadSection("Aadisampada Images", "Aadisampada_Images")}
 				{renderUploadSection("Aadihaat Images", "Aadihaat_Images")}
 
-				<Button variant="contained" color="primary" type="submit">
+				<Button
+					variant="contained"
+					color="primary"
+					type="submit"
+					className={styles.submitButton}
+				>
 					Submit
 				</Button>
 				<Snackbar

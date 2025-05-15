@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
+import styles from "./AdiSampadaForm.module.css";
 
 const AdiSampadaForm = () => {
 	const {
@@ -80,21 +81,21 @@ const AdiSampadaForm = () => {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Adi Sampada Form</h2>
+		<div className={styles.container}>
+			<h2 className={styles.heading}>Adi Sampada Form</h2>
 			<form
 				onSubmit={handleSubmit(handleFormSubmit)}
 				encType="multipart/form-data"
 			>
 				{/* Artform Dropdown */}
-				<div className="mb-4">
-					<label htmlFor="artform" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="artform" className={styles.label}>
 						Artform
 					</label>
 					<select
 						id="artform"
 						{...register("artform", { required: "Please select an artform" })}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.select}
 					>
 						<option value="">Select</option>
 						<option value="Tribal Painting">Tribal Painting</option>
@@ -106,15 +107,13 @@ const AdiSampadaForm = () => {
 						<option value="Tribal livelihood">Tribal livelihood</option>
 					</select>
 					{errors.artform && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.artform.message}
-						</p>
+						<p className={styles.error}>{errors.artform.message}</p>
 					)}
 				</div>
 
 				{/* Image Upload */}
-				<div className="mb-4">
-					<label htmlFor="image" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="image" className={styles.label}>
 						Image Upload
 					</label>
 					<input
@@ -122,25 +121,16 @@ const AdiSampadaForm = () => {
 						id="image"
 						accept="image/*"
 						{...register("image")}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.input}
 					/>
 				</div>
 
-				{/* Video Upload */}
-				{/* <div className="mb-4">
-					<label htmlFor="slidervideo" className="mb-1 font-medium text-black">
-						Video Upload
-					</label>
-					<input
-						type="file"
-						id="slidervideo"
-						accept="video/*"
-						{...register("slidervideo")}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-				</div> */}
-
-				<Button variant="contained" color="primary" type="submit">
+				<Button
+					variant="contained"
+					color="primary"
+					type="submit"
+					className={styles.submitButton}
+				>
 					Submit
 				</Button>
 			</form>

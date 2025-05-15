@@ -17,6 +17,7 @@ import { useForm, Controller } from "react-hook-form";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx";
+import styles from "./AddRepoContentForm.module.css";
 
 const editorConfig = {
 	readonly: false,
@@ -129,40 +130,45 @@ const EditRepoContent = () => {
 	// 	};
 	// 	fetchTribes();
 	//   }, [selectedState, setValue]);
-		useEffect(() => {
-			const fetchTribes = async () => {
-				if (!selectedState) {
-					setTribeOptions([]);
-					setValue("tribe", "");
-					return;
-				}
-				try {
-					const res = await APIClient.get(`/api/Tribes/getbyid/${encodeURIComponent(selectedState)}`);
-					const tribes = res.data.map(item => ({
-						id: item.id,
-						name: item.tribename
-					}));
+	useEffect(() => {
+		const fetchTribes = async () => {
+			if (!selectedState) {
+				setTribeOptions([]);
+				setValue("tribe", "");
+				return;
+			}
+			try {
+				const res = await APIClient.get(
+					`/api/Tribes/getbyid/${encodeURIComponent(selectedState)}`,
+				);
+				const tribes = res.data.map((item) => ({
+					id: item.id,
+					name: item.tribename,
+				}));
 
-					setTribeOptions(tribes);
-	
-					if (repoData && tribes.includes(repoData.tribe)) {
-						setValue("tribe", repoData.tribe);
-					} else if (repoData && selectedState === repoData.state && !tribes.includes(repoData.tribe)) {
-						setTribeOptions([...tribes, repoData.tribe]);
-						setValue("tribe", repoData.tribe);
-					}
-				} catch (error) {
-					console.error("Failed to fetch tribes:", error);
-					setTribeOptions([]);
-					setValue("tribe", "");
-					setSnackbarMessage("Failed to fetch tribes for the selected state.");
-					setSnackbarSeverity("error");
-					setOpenSnackbar(true);
+				setTribeOptions(tribes);
+
+				if (repoData && tribes.includes(repoData.tribe)) {
+					setValue("tribe", repoData.tribe);
+				} else if (
+					repoData &&
+					selectedState === repoData.state &&
+					!tribes.includes(repoData.tribe)
+				) {
+					setTribeOptions([...tribes, repoData.tribe]);
+					setValue("tribe", repoData.tribe);
 				}
-			};
-			fetchTribes();
-		}, [selectedState, setValue, repoData]);
-	  
+			} catch (error) {
+				console.error("Failed to fetch tribes:", error);
+				setTribeOptions([]);
+				setValue("tribe", "");
+				setSnackbarMessage("Failed to fetch tribes for the selected state.");
+				setSnackbarSeverity("error");
+				setOpenSnackbar(true);
+			}
+		};
+		fetchTribes();
+	}, [selectedState, setValue, repoData]);
 
 	useEffect(() => {
 		// Fetching data by ID for editing
@@ -210,7 +216,7 @@ const EditRepoContent = () => {
 		}
 
 		try {
-			await APIClient.post(apis.updateRepoContent+id, formData);
+			await APIClient.post(apis.updateRepoContent + id, formData);
 			setSnackbarMessage("Repo content updated successfully!");
 			setSnackbarSeverity("success");
 		} catch (err) {
@@ -223,57 +229,84 @@ const EditRepoContent = () => {
 	};
 
 	return (
-		<Box sx={{ width: "100%", maxWidth: 600, mx: "auto", mt: 4 }}>
-			<Typography variant="h5" gutterBottom>
+		<Box className={styles.container}>
+			<Typography variant="h5" gutterBottom className={styles.heading}>
 				Edit Repo Content
 			</Typography>
 
-			<form onSubmit={handleSubmit(handleFormSubmit)}>
+			<form onSubmit={handleSubmit(handleFormSubmit)} className={styles.form}>
 				{/* Artform Dropdown */}
-				<FormControl fullWidth margin="normal" error={!!errors.artForm}>
-					<InputLabel>Artform</InputLabel>
+				<FormControl
+					fullWidth
+					margin="normal"
+					error={!!errors.artForm}
+					className={styles.formControl}
+				>
+					<InputLabel className={styles.label}>Artform</InputLabel>
 					<Controller
 						name="artForm"
 						control={control}
 						rules={{ required: "Artform is required" }}
 						render={({ field }) => (
-							<Select {...field} label="Artform">
+							<Select {...field} label="Artform" className={styles.select}>
 								<MenuItem value="">Select Artform</MenuItem>
 								{artFormOptions.map((option) => (
-									<MenuItem key={option} value={option}>
+									<MenuItem
+										key={option}
+										value={option}
+										className={styles.menuItem}
+									>
 										{option}
 									</MenuItem>
 								))}
 							</Select>
 						)}
 					/>
-					<FormHelperText>{errors.artForm?.message}</FormHelperText>
+					<FormHelperText className={styles.formHelperText}>
+						{errors.artForm?.message}
+					</FormHelperText>
 				</FormControl>
 
 				{/* Theme Dropdown */}
-				<FormControl fullWidth margin="normal" error={!!errors.theme}>
-					<InputLabel>Theme</InputLabel>
+				<FormControl
+					fullWidth
+					margin="normal"
+					error={!!errors.theme}
+					className={styles.formControl}
+				>
+					<InputLabel className={styles.label}>Theme</InputLabel>
 					<Controller
 						name="theme"
 						control={control}
 						rules={{ required: "Theme is required" }}
 						render={({ field }) => (
-							<Select {...field} label="Theme">
+							<Select {...field} label="Theme" className={styles.select}>
 								<MenuItem value="">Select Theme</MenuItem>
 								{themeOptions.map((option) => (
-									<MenuItem key={option.id} value={option.id}>
+									<MenuItem
+										key={option.id}
+										value={option.id}
+										className={styles.menuItem}
+									>
 										{option.theme}
 									</MenuItem>
 								))}
 							</Select>
 						)}
 					/>
-					<FormHelperText>{errors.theme?.message}</FormHelperText>
+					<FormHelperText className={styles.formHelperText}>
+						{errors.theme?.message}
+					</FormHelperText>
 				</FormControl>
 
 				{/* Heading Input */}
-				<FormControl fullWidth margin="normal" error={!!errors.heading}>
-					<InputLabel shrink htmlFor="heading-input">
+				<FormControl
+					fullWidth
+					margin="normal"
+					error={!!errors.heading}
+					className={styles.formControl}
+				>
+					<InputLabel shrink htmlFor="heading-input" className={styles.label}>
 						Heading
 					</InputLabel>
 					<Controller
@@ -284,40 +317,46 @@ const EditRepoContent = () => {
 							<input
 								{...field}
 								id="heading-input"
+								className={styles.input}
 								placeholder="Enter Heading"
-								className="w-full p-2 rounded mt-1"
-								style={{
-									padding: "10px",
-									marginTop: "10px",
-									borderRadius: "4px",
-									width: "100%",
-									border: "1px solid #ccc",
-								}}
 							/>
 						)}
 					/>
-					<FormHelperText>{errors.heading?.message}</FormHelperText>
+					<FormHelperText className={styles.formHelperText}>
+						{errors.heading?.message}
+					</FormHelperText>
 				</FormControl>
 
 				{/* State Dropdown */}
-				<FormControl fullWidth margin="normal" error={!!errors.state}>
-					<InputLabel>State</InputLabel>
+				<FormControl
+					fullWidth
+					margin="normal"
+					error={!!errors.state}
+					className={styles.formControl}
+				>
+					<InputLabel className={styles.label}>State</InputLabel>
 					<Controller
 						name="state"
 						control={control}
 						rules={{ required: "State is required" }}
 						render={({ field }) => (
-							<Select {...field} label="State">
+							<Select {...field} label="State" className={styles.select}>
 								<MenuItem value="">Select State</MenuItem>
 								{stateOptions.map((state) => (
-									<MenuItem key={state.id} value={state.state}>
+									<MenuItem
+										key={state.id}
+										value={state.state}
+										className={styles.menuItem}
+									>
 										{state.state}
 									</MenuItem>
 								))}
 							</Select>
 						)}
 					/>
-					<FormHelperText>{errors.state?.message}</FormHelperText>
+					<FormHelperText className={styles.formHelperText}>
+						{errors.state?.message}
+					</FormHelperText>
 				</FormControl>
 
 				{/* Tribe Dropdown */}
@@ -326,38 +365,49 @@ const EditRepoContent = () => {
 					margin="normal"
 					error={!!errors.tribe}
 					disabled={!selectedState}
+					className={styles.formControl}
 				>
-					<InputLabel>Tribe</InputLabel>
+					<InputLabel className={styles.label}>Tribe</InputLabel>
 					<Controller
 						name="tribe"
 						control={control}
-						rules={{ required: "Tribe is required" }}
 						render={({ field }) => (
-							<Select {...field} label="Tribe">
+							<Select {...field} label="Tribe" className={styles.select}>
 								<MenuItem value="">Select Tribe</MenuItem>
 								{/* Display tribes based on selected state */}
 								{tribeOptions.map((tribe) => (
-								<MenuItem key={tribe.id} value={tribe.id}>
-									{tribe.name}
-								</MenuItem>
-								
+									<MenuItem
+										key={tribe.id}
+										value={tribe.id}
+										className={styles.menuItem}
+									>
+										{tribe.name}
+									</MenuItem>
 								))}
-
 							</Select>
 						)}
 					/>
-					<FormHelperText>{errors.tribe?.message}</FormHelperText>
+					<FormHelperText className={styles.formHelperText}>
+						{errors.tribe?.message}
+					</FormHelperText>
 				</FormControl>
 
 				{/* Jodit Editor */}
-				<JoditEditor
-					value={htmlContent}
-					config={editorConfig}
-					onChange={(newContent) => setHtmlContent(newContent)}
-				/>
+				<div className={styles.editorWrapper}>
+					<label className={styles.editorLabel}>Repo Details</label>
+					<JoditEditor
+						value={htmlContent}
+						config={editorConfig}
+						onChange={(newContent) => setHtmlContent(newContent)}
+					/>
+				</div>
 
 				{/* Submit Button */}
-				<Button variant="contained" type="submit" sx={{ mt: 2 }}>
+				<Button
+					variant="contained"
+					type="submit"
+					className={styles.submitButton}
+				>
 					Submit
 				</Button>
 			</form>
@@ -367,10 +417,12 @@ const EditRepoContent = () => {
 				open={openSnackbar}
 				autoHideDuration={3000}
 				onClose={() => setOpenSnackbar(false)}
+				anchorOrigin={{ vertical: "top", horizontal: "center" }}
 			>
 				<Alert
 					severity={snackbarSeverity}
 					onClose={() => setOpenSnackbar(false)}
+					sx={{ width: "100%" }}
 				>
 					{snackbarMessage}
 				</Alert>

@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
+import styles from "./HomeSliderForm.module.css"; // Import the CSS module
 
 const HomeSliderForm = () => {
 	const {
@@ -56,16 +57,17 @@ const HomeSliderForm = () => {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Add Home Slider</h2>
+		<div className={styles.container}>
+			<h2 className={styles.heading}>Add Home Slider</h2>
 
 			<form
 				onSubmit={handleSubmit(handleFormSubmit)}
 				encType="multipart/form-data"
+				className={styles.form}
 			>
 				{/* File Upload */}
-				<div className="mb-4">
-					<label htmlFor="file" className="mb-1 font-medium text-black block">
+				<div className={styles.formGroup}>
+					<label htmlFor="file" className={styles.label}>
 						Upload Image/Video
 					</label>
 					<input
@@ -76,19 +78,20 @@ const HomeSliderForm = () => {
 							required: "Please upload an image or video",
 							validate: (files) => files?.length > 0 || "File is required",
 						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.fileInput}
 					/>
 					{selectedFile?.length > 0 && (
-						<p className="text-gray-600 mt-1">
-							Selected: {selectedFile[0]?.name}
-						</p>
+						<p className={styles.fileName}>Selected: {selectedFile[0]?.name}</p>
 					)}
-					{errors.file && (
-						<p className="text-red-500 text-sm mt-1">{errors.file.message}</p>
-					)}
+					{errors.file && <p className={styles.error}>{errors.file.message}</p>}
 				</div>
 
-				<Button variant="contained" color="primary" type="submit">
+				<Button
+					variant="contained"
+					color="primary"
+					type="submit"
+					className={styles.submitButton}
+				>
 					Submit
 				</Button>
 			</form>

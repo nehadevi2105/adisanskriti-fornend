@@ -5,6 +5,7 @@ import { Button, Snackbar, Alert } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx"; // Adjust path as needed
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
+import styles from "./CoreValueForm.module.css";
 const CoreValueForm = () => {
 	const editor = useRef(null);
 	const [HtmlContent, setHtmlContent] = useState("");
@@ -77,15 +78,15 @@ const CoreValueForm = () => {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Add Core Value</h2>
+		<div className={styles.container}>
+			<h2 className={styles.heading}>Add Core Value</h2>
 			<form
 				onSubmit={handleSubmit(handleFormSubmit)}
 				encType="multipart/form-data"
 			>
 				{/* Description */}
-				<div className="mb-4">
-					<label htmlFor="description" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="description" className={styles.label}>
 						Description
 					</label>
 					<input
@@ -94,38 +95,34 @@ const CoreValueForm = () => {
 						{...register("Description", {
 							required: "Description is required",
 						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.input}
 					/>
 					{errors.Description && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.Description.message}
-						</p>
+						<p className={styles.error}>{errors.Description.message}</p>
 					)}
 				</div>
 
 				{/* Type */}
-				<div className="mb-4">
-					<label htmlFor="type" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="type" className={styles.label}>
 						Our Core Value
 					</label>
 					<select
 						id="type"
 						{...register("Type", { required: "Please select a type" })}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.select}
 					>
 						<option value="">Select</option>
 						<option value="vision">Vision</option>
 						<option value="mission">Mission</option>
 						<option value="planning">Planning</option>
 					</select>
-					{errors.Type && (
-						<p className="text-red-500 text-sm mt-1">{errors.Type.message}</p>
-					)}
+					{errors.Type && <p className={styles.error}>{errors.Type.message}</p>}
 				</div>
 
 				{/* Image */}
-				<div className="mb-4">
-					<label htmlFor="image" className="mb-1 font-medium text-black">
+				<div className={styles.formGroup}>
+					<label htmlFor="image" className={styles.label}>
 						Image Upload
 					</label>
 					<input
@@ -137,25 +134,32 @@ const CoreValueForm = () => {
 							validate: (files) =>
 								(files && files.length > 0) || "File is required",
 						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className={styles.input}
 					/>
 					{errors.Image && (
-						<p className="text-red-500 text-sm mt-1">{errors.Image.message}</p>
+						<p className={styles.error}>{errors.Image.message}</p>
 					)}
 				</div>
 
 				{/* Content */}
-				<div className="mb-4">
-					<label className="mb-1 font-medium text-black">Content</label>
-					<JoditEditor
-						ref={editor}
-						value={HtmlContent}
-						config={config}
-						onChange={(newContent) => setHtmlContent(newContent)}
-					/>
+				<div className={styles.formGroup}>
+					<label className={styles.label}>Content</label>
+					<div className={styles.joditEditor}>
+						<JoditEditor
+							ref={editor}
+							value={HtmlContent}
+							config={config}
+							onChange={(newContent) => setHtmlContent(newContent)}
+						/>
+					</div>
 				</div>
 
-				<Button variant="contained" color="primary" type="submit">
+				<Button
+					variant="contained"
+					color="primary"
+					type="submit"
+					className={styles.submitButton}
+				>
 					Submit
 				</Button>
 			</form>

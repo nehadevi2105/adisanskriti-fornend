@@ -4,6 +4,7 @@ import { Button, Snackbar, Alert, FormControl } from "@mui/material";
 import ConfirmDialog from "../../../../components/dialogBox/ConfirmDialog.jsx"; // Adjust path as needed
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
+import styles from "./AddCourseForm.module.css";
 const AddCourseForm = () => {
 	const {
 		register,
@@ -108,193 +109,185 @@ const AddCourseForm = () => {
 	};
 
 	return (
-		<div className="max-w-xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-10">
-			<h2 className="text-2xl font-bold mb-6 text-center">Add Course</h2>
-			<form
-				onSubmit={handleSubmit(handleFormSubmit)}
-				encType="multipart/form-data"
-			>
-				{/* Course Name */}
-				<div className="mb-4">
-					<label htmlFor="coursename" className="mb-1 font-medium text-black">
-						Course Name
-					</label>
-					<input
-						type="text"
-						id="coursename"
-						{...register("coursename", {
-							required: "Course name is required",
-						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-					{errors.coursename && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.coursename.message}
-						</p>
-					)}
-				</div>
+		 <div className={styles.container}> {/* Use styles.container */}
+      <h2 className={styles.heading}>Add Course</h2> {/* Use styles.heading */}
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        encType="multipart/form-data"
+      >
+        {/* Course Name */}
+        <div className={styles.formGroup}> {/* Use styles.formGroup */}
+          <label htmlFor="coursename" className={styles.label}> {/* Use styles.label */}
+            Course Name
+          </label>
+          <input
+            type="text"
+            id="coursename"
+            {...register("coursename", {
+              required: "Course name is required",
+            })}
+            className={styles.input} 
+          />
+          {errors.coursename && (
+            <p className={styles.error}>{errors.coursename.message}</p> 
+          )}
+        </div>
 
-				{/* Introduction */}
-				<div className="mb-4">
-					<label htmlFor="intro" className="mb-1 font-medium text-black">
-						Introduction
-					</label>
-					<textarea
-						id="intro"
-						rows="4"
-						{...register("intro", {
-							required: "Introduction is required",
-						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-					{errors.intro && (
-						<p className="text-red-500 text-sm mt-1">{errors.intro.message}</p>
-					)}
-				</div>
+        {/* Introduction */}
+        <div className={styles.formGroup}>
+          <label htmlFor="intro" className={styles.label}>
+            Introduction
+          </label>
+          <textarea
+            id="intro"
+            rows="4"
+            {...register("intro", {
+              required: "Introduction is required",
+            })}
+            className={styles.textarea} 
+          />
+          {errors.intro && (
+            <p className={styles.error}>{errors.intro.message}</p>
+          )}
+        </div>
 
-				{/* Introduction Video */}
-				<div className="mb-4">
-					<label htmlFor="introvideo" className="mb-1 font-medium text-black">
-						Introduction Video
-					</label>
-					<input
-						type="file"
-						id="introvideo"
-						accept="video/*"
-						{...register("introvideo", {
-							required: "Introduction video is required",
-							validate: (files) =>
-								(files && files.length > 0) || "Please upload a video file",
-						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-					{errors.introvideo && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.introvideo.message}
-						</p>
-					)}
-				</div>
+        {/* Introduction Video */}
+        <div className={styles.formGroup}>
+          <label htmlFor="introvideo" className={styles.label}>
+            Introduction Video
+          </label>
+          <input
+            type="file"
+            id="introvideo"
+            accept="video/*"
+            {...register("introvideo", {
+              required: "Introduction video is required",
+              validate: (files) =>
+                (files && files.length > 0) || "Please upload a video file",
+            })}
+            className={styles.input}
+          />
+          {errors.introvideo && (
+            <p className={styles.error}>{errors.introvideo.message}</p>
+          )}
+        </div>
 
-				{/* Course Thumbnail */}
-				<div className="mb-4">
-					<label
-						htmlFor="coursethumbnail"
-						className="mb-1 font-medium text-black"
-					>
-						Course Thumbnail
-					</label>
-					<input
-						type="file"
-						id="coursethumbnail"
-						accept="image/*"
-						{...register("coursethumbnail", {
-							required: "Course thumbnail is required",
-							validate: (files) =>
-								(files && files.length > 0) || "Please upload an image",
-						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-					{errors.coursethumbnail && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.coursethumbnail.message}
-						</p>
-					)}
-				</div>
+        {/* Course Thumbnail */}
+        <div className={styles.formGroup}>
+          <label
+            htmlFor="coursethumbnail"
+            className={styles.label}
+          >
+            Course Thumbnail
+          </label>
+          <input
+            type="file"
+            id="coursethumbnail"
+            accept="image/*"
+            {...register("coursethumbnail", {
+              required: "Course thumbnail is required",
+              validate: (files) =>
+                (files && files.length > 0) || "Please upload an image",
+            })}
+            className={styles.input}
+          />
+          {errors.coursethumbnail && (
+            <p className={styles.error}>{errors.coursethumbnail.message}</p>
+          )}
+        </div>
 
-				{/* Course Type */}
-				<div className="mb-4">
-					<label htmlFor="coursetype" className="mb-1 font-medium text-black">
-						Course Type
-					</label>
-					<select
-						id="coursetype"
-						{...register("coursetype", {
-							required: "Please select a course type",
-						})}
-						className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					>
-						<option value="">Select</option>
-						<option value="Advanced">Advanced</option>
-						<option value="Beginner">Beginner</option>
-					</select>
-					{errors.coursetype && (
-						<p className="text-red-500 text-sm mt-1">
-							{errors.coursetype.message}
-						</p>
-					)}
-				</div>
+        {/* Course Type */}
+        <div className={styles.formGroup}>
+          <label htmlFor="coursetype" className={styles.label}>
+            Course Type
+          </label>
+          <select
+            id="coursetype"
+            {...register("coursetype", {
+              required: "Please select a course type",
+            })}
+            className={styles.select} 
+          >
+            <option value="">Select</option>
+            <option value="Advanced">Advanced</option>
+            <option value="Beginner">Beginner</option>
+          </select>
+          {errors.coursetype && (
+            <p className={styles.error}>{errors.coursetype.message}</p>
+          )}
+        </div>
 
-				{/* State Dropdown */}
-				<div className="mb-4">
-					<label className="mb-1 font-medium text-black">State</label>
-					<select
-						{...register("state", { required: "Please select a state" })}
-						className="w-full border border-gray-300 p-2 rounded"
-						onChange={(e) => setSelectedState(e.target.value)}
-					>
-						<option value="">Select State</option>
-						{stateOptions.map(state => (
-							<option key={state} value={state}>{state}</option>
-						))}
-					</select>
-					{errors.state && <p className="text-red-500 text-sm mt-1">{errors.state.message}</p>}
-				</div>
+        {/* State Dropdown */}
+        <div className={styles.formGroup}>
+          <label className={styles.label}>State</label>
+          <select
+            {...register("state", { required: "Please select a state" })}
+            className={styles.select}
+            onChange={(e) => setSelectedState(e.target.value)}
+          >
+            <option value="">Select State</option>
+            {stateOptions.map(state => (
+              <option key={state} value={state}>{state}</option>
+            ))}
+          </select>
+          {errors.state && <p className={styles.error}>{errors.state.message}</p>}
+        </div>
 
-				{/* Tribe Dropdown */}
-				<div className="mb-4">
-					<label className="mb-1 font-medium text-black">Tribe</label>
-					<select
-						{...register("tribe", { required: "Please select a tribe" })}
-						className="w-full border border-gray-300 p-2 rounded"
-					>
-						<option value="">Select Tribe</option>
-						{tribeOptions.map(tribe => (
-							<option key={tribe} value={tribe}>{tribe}</option>
-						))}
-					</select>
-					{errors.tribe && <p className="text-red-500 text-sm mt-1">{errors.tribe.message}</p>}
-				</div>
+        {/* Tribe Dropdown */}
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Tribe</label>
+          <select
+            {...register("tribe", { required: "Please select a tribe" })}
+            className={styles.select}
+          >
+            <option value="">Select Tribe</option>
+            {tribeOptions.map(tribe => (
+              <option key={tribe} value={tribe}>{tribe}</option>
+            ))}
+          </select>
+          {errors.tribe && <p className={styles.error}>{errors.tribe.message}</p>}
+        </div>
 
-				{/* Art Form Dropdown */}
-				<div className="mb-4">
-					<label className="mb-1 font-medium text-black">Art Form</label>
-					<select
-						{...register("artform", { required: "Please select an art form" })}
-						className="w-full border border-gray-300 p-2 rounded"
-					>
-						<option value="">Select Art Form</option>
-						{artFormOptions.map(form => (
-							<option key={form} value={form}>{form}</option>
-						))}
-					</select>
-					{errors.artform && <p className="text-red-500 text-sm mt-1">{errors.artform.message}</p>}
-				</div>
+        {/* Art Form Dropdown */}
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Art Form</label>
+          <select
+            {...register("artform", { required: "Please select an art form" })}
+            className={styles.select}
+          >
+            <option value="">Select Art Form</option>
+            {artFormOptions.map(form => (
+              <option key={form} value={form}>{form}</option>
+            ))}
+          </select>
+          {errors.artform && <p className={styles.error}>{errors.artform.message}</p>}
+        </div>
 
-				<Button variant="contained" color="primary" type="submit">
-					Submit
-				</Button>
-			</form>
+        <Button variant="contained" color="primary" type="submit" className={styles.submitButton}> {/* Use styles.submitButton */}
+          Submit
+        </Button>
+      </form>
 
-			<Snackbar
-				open={openSnackbar}
-				autoHideDuration={6000}
-				onClose={() => setOpenSnackbar(false)}
-			>
-				<Alert
-					onClose={() => setOpenSnackbar(false)}
-					severity={snackbarSeverity}
-					sx={{ width: "100%" }}
-				>
-					{snackbarMessage}
-				</Alert>
-			</Snackbar>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 
-			<ConfirmDialog
-				open={confirmOpen}
-				onClose={() => setConfirmOpen(false)}
-				onConfirm={handleConfirmSubmit}
-			/>
-		</div>
+      <ConfirmDialog
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        onConfirm={handleConfirmSubmit}
+      />
+    </div>
 	);
 };
 
