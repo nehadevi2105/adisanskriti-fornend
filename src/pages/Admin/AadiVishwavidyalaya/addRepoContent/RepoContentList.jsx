@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import APIClient from "../../../../API/APIClient";
-import apis from "../../../../API/API.json"; // Ensure /api/AddRepositoryContent and delete API exist here
+import apis from "../../../../API/API.json";
+import styles from "./AddRepoContentForm.module.css"; // Import the CSS module
 
 const RepoContentList = () => {
 	const [repoContent, setRepoContent] = useState([]);
@@ -13,7 +14,7 @@ const RepoContentList = () => {
 	const fetchRepoContent = useCallback(async () => {
 		setLoading(true);
 		try {
-			const response = await APIClient.get(apis.GetRepoContentList); // Should match /api/AddRepositoryContent
+			const response = await APIClient.get(apis.GetRepoContentList);
 
 			const formattedData = response.data.map((item, index) => ({
 				id1: index + 1,
@@ -50,7 +51,7 @@ const RepoContentList = () => {
 			if (!window.confirm("Are you sure you want to delete this content?"))
 				return;
 			try {
-				await APIClient.post(apis.DeleteRepositoryContent + id); // Make sure this is defined in your API.json
+				await APIClient.post(apis.DeleteRepositoryContent + id);
 				alert("Content deleted");
 				fetchRepoContent();
 			} catch (err) {
@@ -64,10 +65,10 @@ const RepoContentList = () => {
 	const renderTableRows = useMemo(() => {
 		if (loading) {
 			return Array.from({ length: 3 }).map((_, i) => (
-				<tr key={`skeleton-${i}`} className="animate-pulse border-t">
-					{Array.from({ length: 6 }).map((__, j) => (
-						<td key={j} className="px-4 py-2 border">
-							<div className="h-4 bg-gray-200 rounded w-3/4 mx-auto" />
+				<tr key={`skeleton-${i}`} className={styles.loadingRow}>
+					{Array.from({ length: 7 }).map((__, j) => (
+						<td key={j} className={styles.loadingCell}>
+							<div className={styles.skeleton}></div>
 						</td>
 					))}
 				</tr>
@@ -77,7 +78,7 @@ const RepoContentList = () => {
 		if (error) {
 			return (
 				<tr>
-					<td colSpan="6" className="px-4 py-4 text-center text-red-600">
+					<td colSpan="7" className={styles.errorText}>
 						{error}
 					</td>
 				</tr>
@@ -87,7 +88,7 @@ const RepoContentList = () => {
 		if (repoContent.length === 0) {
 			return (
 				<tr>
-					<td colSpan="6" className="px-4 py-4 text-center">
+					<td colSpan="7" className={styles.noDataText}>
 						No repository content found.
 					</td>
 				</tr>
@@ -95,27 +96,24 @@ const RepoContentList = () => {
 		}
 
 		return repoContent.map((item) => (
-			<tr key={item.id} className="border-t hover:bg-gray-50">
-				<td className="px-4 py-2 border">{item.id1}</td>
-				<td className="px-4 py-2 border">{item.artform}</td>
-				<td className="px-4 py-2 border">{item.theme}</td>
-				<td className="px-4 py-2 border">{item.state}</td>
-				<td className="px-4 py-2 border">{item.tribe}</td>
-				<td className="px-4 py-2 border">{item.heading}</td>
-				<td className="px-4 py-2 border text-center">
-					<div className="flex gap-2 justify-center">
+			<tr key={item.id} className={styles.row}>
+				<td className={styles.cell}>{item.id1}</td>
+				<td className={styles.cell}>{item.artform}</td>
+				<td className={styles.cell}>{item.theme}</td>
+				<td className={styles.cell}>{item.state}</td>
+				<td className={styles.cell}>{item.tribe}</td>
+				<td className={styles.cell}>{item.heading}</td>
+				<td className={styles.actionsCell}>
+					<div className={styles.actions}>
 						<Link to={`/EditRepoContent/${item.id}`}>
-							<button
-								type="button"
-								className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700"
-							>
+							<button type="button" className={styles.editButton}>
 								Edit
 							</button>
 						</Link>
 						<button
 							type="button"
 							onClick={() => handleDelete(item.id)}
-							className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+							className={styles.deleteButton}
 						>
 							Delete
 						</button>
@@ -126,19 +124,19 @@ const RepoContentList = () => {
 	}, [repoContent, loading, error, handleDelete, handleEdit]);
 
 	return (
-		<div className="p-4">
-			<h2 className="text-2xl font-semibold mb-4">Repository Content List</h2>
-			<div className="overflow-x-auto bg-white rounded-xl shadow-md">
-				<table className="min-w-full table-auto text-sm text-left border border-gray-200">
-					<thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+		<div className={styles.container}>
+			<h2 className={styles.heading}>Repository Content List</h2>
+			<div className={styles.tableContainer}>
+				<table className={styles.table}>
+					<thead className={styles.thead}>
 						<tr>
-							<th className="px-4 py-3 border">ID</th>
-							<th className="px-4 py-3 border">Artform</th>
-							<th className="px-4 py-3 border">Theme</th>
-							<th className="px-4 py-3 border">State</th>
-							<th className="px-4 py-3 border">Tribe</th>
-							<th className="px-4 py-3 border">Heading</th>
-							<th className="px-4 py-3 border text-center">Actions</th>
+							<th className={styles.th}>ID</th>
+							<th className={styles.th}>Artform</th>
+							<th className={styles.th}>Theme</th>
+							<th className={styles.th}>State</th>
+							<th className={styles.th}>Tribe</th>
+							<th className={styles.th}>Heading</th>
+							<th className={styles.th}>Actions</th>
 						</tr>
 					</thead>
 					<tbody>{renderTableRows}</tbody>

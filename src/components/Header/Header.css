@@ -39,13 +39,13 @@ body.dark .logo a span{
 
 /****** menu part *******/
 .menu-part{
-  display: flex;
+ display: flex;
   align-items: center;
   position: relative;
 }
 .menu-part button.open-btn {
   border: none;
-  background: var(--primary-bg);
+  /* background: var(--primary-bg); */
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -423,7 +423,7 @@ font-weight: 500;
    margin-left: 0px !important; 
 }
 .menu-part.menu-last {
-  display: flex;
+ /* display: flex;*/
   align-items: center;
   justify-content: space-between;
 }
@@ -431,4 +431,16 @@ font-weight: 500;
 
 }
 
-
+.part2{
+    display: flex;
+    justify-content: space-between;
+}
+.logo-aadis {
+    width: 120px;
+    padding-top: 10px;
+}
+.logo-aadis1 {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
