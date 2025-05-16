@@ -126,6 +126,8 @@ const HomeSliderList = () => {
 				</table>
 			</div>
 		</div>
+		</div>
+		
 	);
 };
 
