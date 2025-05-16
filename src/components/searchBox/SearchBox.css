@@ -2,7 +2,7 @@
 .searchbox{
   width: 300px;
   height: 40px;
-  background: var(--primary-bg);
+  /* background: var(--primary-bg); */
   border-radius: 5px;
   margin-left: 20px;
   display: flex;

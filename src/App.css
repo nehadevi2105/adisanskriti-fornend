@@ -28,4 +28,13 @@
 
 }
 
+.new-dash{
+  margin-left:35px;
+}
+header.d-flex.align-items-center.shadow-sm {
+    background-color: #cccccc;
+}
 
+.all-left-menu {
+    background-color: #cccccc85;
+}

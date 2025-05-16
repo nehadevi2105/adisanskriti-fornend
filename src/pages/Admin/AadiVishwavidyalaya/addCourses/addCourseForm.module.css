@@ -1,75 +1,141 @@
-/* AddCourseForm.module.css */
+/* AddCourseList.module.css */
 
 .container {
-  max-width: 768px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 32px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 0.5rem;
-  margin-top: 2.5rem;
-  /* Add a more visible border */
-  border: 1px solid #a0aec0; /* You can adjust the color code as needed */
+    max-width: 960px; /* Adjust as needed */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+    background-color: #f9fafb; /* Light gray background */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 0.375rem; /* Slightly smaller border radius */
+    margin-top: 2rem;
+    border: 1px solid #e5e7eb; /* Light gray border */
 }
 
 .heading {
-  font-size: 1.5rem; /* Roughly equivalent to Tailwind's text-2xl */
-  font-weight: 700; /* Equivalent to Tailwind's font-bold */
-  margin-bottom: 1.5rem; /* Equivalent to Tailwind's mb-6 */
-  text-align: center; /* Equivalent to Tailwind's text-center */
-  color: #1e293b; /* Example text color */
+    font-size: 1.875rem; /* text-xl in Tailwind */
+    font-weight: 600; /* semibold in Tailwind */
+    margin-bottom: 1.5rem;
+    text-align: left;
+    color: #374151; /* Dark gray text */
 }
 
-.formGroup {
-  margin-bottom: 1rem; /* Equivalent to Tailwind's mb-4 */
+.tableContainer {
+    overflow-x: auto;
+    background-color: #fff;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    margin-top: 1rem; /* Adjust as needed */
 }
 
-.label {
-  margin-bottom: 0.25rem; /* Equivalent to Tailwind's mb-1 */
-  font-weight: 500; /* Equivalent to Tailwind's font-medium */
-  color: #000000; /* Equivalent to Tailwind's text-black */
-  display: block; /* Make label a block element */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e5e7eb; /* Add table border */
 }
 
-.input,
-.textarea,
-.select {
-  width: 100%; /* Equivalent to Tailwind's w-full */
-  border: 1px solid #d1d5db; /* Equivalent to Tailwind's border border-gray-300 */
-  padding: 0.5rem; /* Equivalent to Tailwind's p-2 */
-  border-radius: 0.25rem; /* Equivalent to Tailwind's rounded */
-  outline: none; /* Remove default focus outline */
+.thead {
+    background-color: #f3f4f6; /* Light gray header */
+    color: #4b5563; /* Medium gray text */
+    font-size: 0.875rem; /* text-sm equivalent */
+    text-transform: uppercase;
 }
 
-.input:focus,
-.textarea:focus,
-.select:focus {
-  box-shadow: 0 0 0 2px #60a5fa; /* Similar to Tailwind's focus:ring-2 focus:ring-blue-500 */
+.th {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #d1d5db;
+    text-align: left;
 }
 
-.textarea {
-  resize: vertical; /* Allow vertical resizing of textarea */
+.row {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.error {
-  color: #dc2626; /* Equivalent to Tailwind's text-red-500 */
-  font-size: 0.75rem; /* Equivalent to Tailwind's text-sm */
-  margin-top: 0.25rem; /* Equivalent to Tailwind's mt-1 */
+.row:hover {
+    background-color: #f9fafb;
 }
 
-.submitButton {
-  background-color: #1976d2; /* Equivalent to MUI's primary color */
-  color: #ffffff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.25rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.3s ease;
+.cell {
+    padding: 0.75rem 1rem;
+    border-right: 1px solid #e5e7eb; /* Add cell borders */
 }
 
-.submitButton:hover {
-  background-color: #1565c0;
+.cell:last-child {
+    border-right: none; /* Remove border from the last cell */
 }
 
+.actionsCell {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    border-right: 1px solid #e5e7eb; /* Add border to actions cell */
+}
+
+.actionsCell:last-child {
+    border-right: none; /* Remove border from the last actions cell */
+}
+
+.loadingRow .loadingCell {
+    padding: 0.75rem 1rem;
+    border-right: 1px solid #e5e7eb;
+}
+
+.loadingRow .loadingCell:last-child {
+    border-right: none;
+}
+
+.skeleton {
+    height: 1rem;
+    background-color: #e0e0e0;
+    border-radius: 0.25rem;
+    width: 75%;
+    margin: 0 auto;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.errorText {
+    padding: 1rem;
+    text-align: center;
+    color: #dc2626;
+}
+
+.noDataText {
+    padding: 1rem;
+    text-align: center;
+    color: #718096;
+}
+
+
+.editButton,
+.deleteButton {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+    color: white;
+}
+
+.editButton {
+    background-color: #3b82f6; /* Blue */
+}
+
+.editButton:hover {
+    background-color: #2563eb;
+}
+
+.deleteButton {
+    background-color: #ef4444; /* Red */
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+}

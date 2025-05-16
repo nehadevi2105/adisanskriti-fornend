@@ -20,6 +20,7 @@ import { RiLock2Fill } from "react-icons/ri";
 import { IoMdMenu } from "react-icons/io";
 
 import SearchBox from "../searchBox/SearchBox";
+import aadi from "../../img/aadi.png";
 import { MyContext } from "../../App";
 
 import "./Header.css";
@@ -63,12 +64,11 @@ const Header = () => {
 				<div className="container-fluid">
 					<div className="row header-row ">
 						{/********  header part 1  ************/}
-						<div className="col-sm-2 col-md-12 part1 menu-option ">
+						<div className="col-md-2 col-lg-2 col-12 part1 menu-option ">
 							{/* logo part  */}
-							<div className="logo">
+							<div className="logo-aadis1">
 								<Link to="/" className="d-flex align-items-center ">
-									<img src={logo} className="logo" />
-									<span className="logo-name "> Aadi Sanskriti </span>
+									<img src={aadi} className="logo-aadis" />
 								</Link>
 							</div>
 							<div className="mobile-menu">
@@ -79,7 +79,7 @@ const Header = () => {
 						</div>
 
 						{/********  header part 2  ********/}
-						<div className="col-sm-3 part2 mobile-hide">
+						<div className="col-md-10 col-lg-10 col-12 part2 mobile-hide">
 							<div className="menu-part ">
 								<button
 									className="open-btn mobile-none"
@@ -97,10 +97,6 @@ const Header = () => {
 									<SearchBox />
 								</div>
 							</div>
-						</div>
-
-						{/********  header part 3  ********/}
-						<div className="col-sm-7 part3 ">
 							<div className="menu-part menu-last ">
 								{/* tablet show search box */}
 								<div className="search-box tablet-show-search ">
@@ -570,7 +566,7 @@ const Header = () => {
 									</div>
 								)}
 
-								{isLogin !== true ? (
+								{/* {isLogin !== true ? (
 									<Link to="/login">
 										{" "}
 										<button className="signUp-btn"> Sign Up </button>{" "}
@@ -595,7 +591,7 @@ const Header = () => {
 											<div className="nick-name">@goutamray53</div>
 										</div>
 									</button>
-								)}
+								)} */}
 
 								{openDrop === true && (
 									<ul className="dropdown-menu-item shadow">
@@ -633,6 +629,8 @@ const Header = () => {
 								)}
 							</div>
 						</div>
+
+						{/********  header part 3  ********/}
 					</div>
 				</div>
 			</header>

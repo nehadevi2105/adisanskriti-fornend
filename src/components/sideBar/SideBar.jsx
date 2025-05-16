@@ -40,6 +40,22 @@ const SideBar = () => {
 					<h4 className="mt-3"> MAIN PAGES </h4>
 					<ul>
 						<li>
+							<Link to="/analytics">
+								<button
+									type="button"
+									className={` ${activeTab === 0 ? "active" : ""} `}
+									onClick={() => isOpenSubmenu(5)}
+								>
+									<span className="icon">
+										{" "}
+										<MdDashboard />{" "}
+									</span>
+									Dashboard
+									{/* <span className="angle-abc"> 3 </span> */}
+								</button>
+							</Link>
+						</li>
+						{/* <li>
 							<button
 								className={` ${activeTab === 0 ? "active" : ""} `}
 								onClick={() => isOpenSubmenu(0)}
@@ -69,8 +85,8 @@ const SideBar = () => {
 									</li>
 								</ul>
 							</div>
-						</li>
-						<li>
+						</li> */}
+						{/* <li>
 							<button
 								className={` ${activeTab === 1 ? "active" : ""} `}
 								onClick={() => isOpenSubmenu(1)}
@@ -91,10 +107,10 @@ const SideBar = () => {
                         <li> <Link to="/register"> Registation </Link></li>
                         <li> <Link to="/forget"> Forget Password  </Link></li>
                       </ul>
-                  </div> */}
-						</li>
+                  </div> 
+						</li> */}
 
-						<li>
+						{/* <li>
 							<button
 								className={` ${activeTab === 2 ? "active" : ""} `}
 								onClick={() => isOpenSubmenu(2)}
@@ -115,8 +131,8 @@ const SideBar = () => {
                       <li> <Link to="/user-profile"> User Profile </Link></li>
                       <li> <Link to="/my-account"> My Account  </Link></li>
                     </ul>
-                  </div> */}
-						</li>
+                  </div> 
+						</li> */}
 
 						<li>
 							<button
@@ -422,7 +438,7 @@ const SideBar = () => {
 							</Link>
 						</li>
 
-						<li>
+						{/* <li>
 							<Link to="/documentation">
 								<button
 									type="button"
@@ -436,7 +452,7 @@ const SideBar = () => {
 									documentation
 								</button>
 							</Link>
-						</li>
+						</li> */}
 
 						{/* <li>
 							<Link to="/message">
@@ -637,7 +653,7 @@ const SideBar = () => {
 								</button>
 							</Link>
 						</li> */}
-						<li>
+						{/* <li>
 							<Link to="/change-log">
 								<button
 									className={` ${activeTab === 21 ? "active" : ""} `}
@@ -650,7 +666,7 @@ const SideBar = () => {
 									change log
 								</button>
 							</Link>
-						</li>
+						</li> */}
 						<li>
 							<Link to="/AadiVishvavidyalaForm">
 								<button
@@ -679,7 +695,7 @@ const SideBar = () => {
 								</button>
 							</Link>
 						</li> */}
-						<li>
+						{/* <li>
 							<Link to="/category-list">
 								<button
 									className={` ${activeTab === 23 ? "active" : ""} `}
@@ -692,9 +708,9 @@ const SideBar = () => {
 									Category List
 								</button>
 							</Link>
-						</li>
+						</li> */}
 					</ul>
-					<div className="logoutWrapper">
+					{/* <div className="logoutWrapper">
 						<Link to="/login">
 							<button>
 								<span>
@@ -704,7 +720,7 @@ const SideBar = () => {
 								Logout
 							</button>
 						</Link>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</>

@@ -1,78 +1,97 @@
 import { useEffect } from "react";
 
-
-// react icons 
-import { 
-   FaCalendarAlt,
-   FaCartArrowDown, 
-   FaRegUserCircle, 
-   FaShoppingBag } from "react-icons/fa";
+// react icons
+import {
+	FaCalendarAlt,
+	FaCartArrowDown,
+	FaRegUserCircle,
+	FaShoppingBag,
+} from "react-icons/fa";
 import { TbStars } from "react-icons/tb";
-import { HiDotsHorizontal } from "react-icons/hi";
+//import { HiDotsHorizontal } from "react-icons/hi";
 
-// components 
+// components
 import AnalyticsBox from "../../../components/analyticsBox/AnalyticsBox";
-import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
+//import BreadCrumb from "../../../components/BreadCrumb/BreadCrumb";
 
-// images 
-import bang from "../../../assets/img/bd.webp"
-import de from "../../../assets/img/de.webp"
-import ph from "../../../assets/img/ph.webp"
-import sa from "../../../assets/img/sa.webp"
-import us from "../../../assets/img/us.webp"
+// images
+// import bang from "../../../assets/img/bd.webp";
+// import de from "../../../assets/img/de.webp";
+// import ph from "../../../assets/img/ph.webp";
+// import sa from "../../../assets/img/sa.webp";
+// import us from "../../../assets/img/us.webp";
 
-import Lines from "../../../components/chart/Lines";
-
+// import Lines from "../../../components/chart/Lines";
 
 export const data2 = [
-  ["Task", "Hours per Day"],
-  ["Work", 11],
-  ["Eat", 2],
-  ["Commute", 2],
-  ["Watch TV", 2],
-  ["Sleep", 7], // CSS-style declaration
+	["Task", "Hours per Day"],
+	["Work", 11],
+	["Eat", 2],
+	["Commute", 2],
+	["Watch TV", 2],
+	["Sleep", 7], // CSS-style declaration
 ];
 
 export const options2 = {
-  pieHole: 0.4,
-  is3D: false,
-  'chartArea' : {'height': "100%", 'width' :'90%'}
+	pieHole: 0.4,
+	is3D: false,
+	chartArea: { height: "100%", width: "90%" },
 };
 
-// data 3 
+// data 3
 export const data3 = [
-  ["Year", "Sales", "Expenses", "Profit"],
-  ["2014", 1000, 400, 200],
-  ["2015", 1170, 460, 250],
-  ["2016", 660, 1120, 300],
-  ["2017", 1030, 540, 350],
+	["Year", "Sales", "Expenses", "Profit"],
+	["2014", 1000, 400, 200],
+	["2015", 1170, 460, 250],
+	["2016", 660, 1120, 300],
+	["2017", 1030, 540, 350],
 ];
 
-
-import "./Analytics.css"
+import "./Analytics.css";
 
 const Analyticks = () => {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
-  useEffect(() => {
-    window.scrollTo(0,0)
-  }, []); 
+	return (
+		<>
+			<div className="right-content new-dash">
+				{/* <BreadCrumb title={"Analyticks"} page={"Dashboard"} /> */}
 
-  return (
-    <>
-      <div className="right-content">
-        <BreadCrumb title={"Analyticks"} page={"Dashboard"}/>
+				<div className="row">
+					<div className="col-sm-12 box-div analytics ">
+						<AnalyticsBox
+							color={["#1ba054", "#4dd988"]}
+							total={"136,758K"}
+							icon={<FaRegUserCircle />}
+							grow={true}
+							content={"Impressions"}
+						/>
+						<AnalyticsBox
+							color={["#bf10e1", "#ed67ff"]}
+							total={"125,964K"}
+							icon={<FaCartArrowDown />}
+							content={"Engagements"}
+						/>
+						<AnalyticsBox
+							color={["#2d79e6", "#63b2f6"]}
+							total={"141,253K"}
+							icon={<FaShoppingBag />}
+							content={"Conversions"}
+						/>
 
-        <div className="row">
-          <div className="col-sm-12 box-div analytics ">
-              <AnalyticsBox color={["#1ba054", "#4dd988"]} total={"136,758K"} icon={< FaRegUserCircle /> } grow={true} content={"Impressions"}  />
-              <AnalyticsBox color={["#bf10e1", "#ed67ff"]} total={"125,964K"}  icon={< FaCartArrowDown /> } content={"Engagements"} />
-              <AnalyticsBox color={["#2d79e6", "#63b2f6"]} total={"141,253K"}  icon={< FaShoppingBag/> } content={"Conversions"} />
+						<AnalyticsBox
+							color={["#e1950e", "#f6304e"]}
+							total={"154,179K"}
+							icon={<TbStars />}
+							grow={true}
+							content={"Bounce Rate"}
+						/>
+					</div>
+				</div>
 
-              <AnalyticsBox color={["#e1950e", "#f6304e"]} total={"154,179K"} icon={< TbStars/> } grow={true} content={"Bounce Rate"} />
-          </div>
-        </div>
-
-        <div className="row my-3 visitor-part ">
+				{/* <div className="row my-3 visitor-part ">
           <div className="col-sm-7 visitor-part-left">
              <div className="card shadow p-3 analytic-part ">
                  <div className="revenue-part">
@@ -195,12 +214,10 @@ const Analyticks = () => {
                  </div>
             </div>
           </div>
-         </div>
-        </div>
-    </>
-  )
-}
+         </div> */}
+			</div>
+		</>
+	);
+};
 
-export default Analyticks; 
-
-
+export default Analyticks;
