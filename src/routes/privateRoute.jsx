@@ -97,6 +97,17 @@ import AadiVishwaVidyalaWeb from "../pages/website/aadiVishwaVidyalaWeb/AadiVish
 //Aadi Sampada
 import AadiSampada from "../pages/website/aadiSampada/AadiSampada";
 
+
+//website
+//website header
+import Header from "../pages/website/components/Header";
+import Footer from "../pages/website/components/Footer";
+//Aadi VishwaVidyalaWeb
+import AadiVishwaVidyalaWeb from "../pages/website/aadiVishwaVidyalaWeb/AadiVishwaVidyalaWeb";
+//Aadi Sampada
+import AadiSampada from "../pages/website/aadiSampada/AadiSampada";
+
+
 //Cultural Heritage
 import CulturalHeritageForm from "../pages/Admin/AadiVishwavidyalaya/culturalHeritage/CulturalHeritageForm";
 
