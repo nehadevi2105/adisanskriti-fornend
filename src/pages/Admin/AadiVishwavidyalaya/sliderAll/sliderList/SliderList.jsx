@@ -42,6 +42,8 @@ const SliderList = () => {
   };
 
   return (
+      <div className="min-h-screen bg-gray-100 white:bg-gray-900">
+       <div className="py-3 px-4 shadow-md"></div>
     <div style={{ padding: "20px" }}>
       <table
         style={{
@@ -72,6 +74,8 @@ const SliderList = () => {
         </tbody>
       </table>
     </div>
+    </div>
+  
   );
 };
 
