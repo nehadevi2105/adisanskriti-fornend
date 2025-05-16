@@ -4,6 +4,7 @@ import apis from "../../../../API/API.json";
 //import baseURL from "../../../../API/APIClient";
 
 import baesURL from "../../../../API/APIClient";
+import styles from "./AdiSampadaForm.module.css";
 
 const AdiSampadaSliderList = () => {
 	const [items, setItems] = useState([]);
@@ -121,17 +122,19 @@ const AdiSampadaSliderList = () => {
 	}, [items, loading, error, handleDelete]);
 
 	return (
-		<div className="p-4">
-			<h2 className="text-2xl font-semibold mb-4">Adi Sampada Slider List</h2>
-			<div className="overflow-x-auto bg-white rounded-xl shadow-md">
-				<table className="min-w-full table-auto text-sm text-left border border-gray-200">
-					<thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+		<div className={styles.container}>
+			{" "}
+			{/* Apply container style if needed */}
+			<h2 className={styles.heading}>Adi Sampada Slider List</h2>{" "}
+			{/* Apply heading style */}
+			<div className={styles.tableContainer}>
+				<table className={styles.table}>
+					<thead className={styles.thead}>
 						<tr>
-							<th className="px-4 py-3 border">ID</th>
-							<th className="px-4 py-3 border">Artform</th>
-							<th className="px-4 py-3 border">Image</th>
-							{/* <th className="px-4 py-3 border">Video</th> */}
-							<th className="px-4 py-3 border text-center">Action</th>
+							<th className={styles.th}>ID</th>
+							<th className={styles.th}>Artform</th>
+							<th className={styles.th}>Image</th>
+							<th className={styles.th}>Action</th>
 						</tr>
 					</thead>
 					<tbody>{renderTableRows}</tbody>
