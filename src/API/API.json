@@ -39,5 +39,8 @@
 	"GetAdiSanskritiList": "/api/AadiSanskriti",
 	"DeleteAdiSanskriti": "/api/AadiSanskriti/delete/",
 	"GetAdiSanskritiById": "/api/AadiSanskriti/GetById/",
-	"UpdateAdiSanskriti": "/api/AadiSanskriti/Update/"
+	"UpdateAdiSanskriti": "/api/AadiSanskriti/Update/",
+
+	"postCulturalHeritage" : "/api/CulturalHeritage/InsertCulturalHeritage"
+
 }

@@ -68,7 +68,7 @@ const Header = () => {
 							<div className="logo">
 								<Link to="/" className="d-flex align-items-center ">
 									<img src={logo} className="logo" />
-									<span className="logo-name "> HOTASH </span>
+									<span className="logo-name "> Aadi Sanskriti </span>
 								</Link>
 							</div>
 							<div className="mobile-menu">

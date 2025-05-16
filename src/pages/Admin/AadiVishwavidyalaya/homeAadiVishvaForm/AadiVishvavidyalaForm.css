@@ -1,0 +1,108 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Increased gap for better spacing */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column; /* Stack label above input */
+  margin-bottom: 15px; /* Add some space between form groups */
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block; /* Make label take full width */
+  margin-bottom: 5px; /* Space between label and input */
+  color: #333; /* Optional: Improve label readability */
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select,
+.form-group input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%; /* Ensure input takes full width of its container */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 10px; /* Space between buttons if there are multiple */
+  margin-top: 20px; /* Add some space above the buttons */
+}
+
+.details-table-container {
+  margin-top: 20px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: left;
+}
+
+.details-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.no-data {
+  text-align: center;
+  padding: 15px;
+  color: #777;
+}
+
+.image-list-preview {
+  display: flex;
+  gap: 5px;
+  max-width: 300px; /* Adjust as needed */
+  overflow-x: auto;
+}
+
+.image-list-preview img {
+  width: 60px; /* Reduced image size in the list */
+  height: 60px; /* Reduced image size in the list */
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.image-preview-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  overflow-x: auto;
+}
+
+.image-preview {
+  max-width: 100px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}

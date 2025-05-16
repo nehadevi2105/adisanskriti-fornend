@@ -422,6 +422,22 @@ const SideBar = () => {
 							</Link>
 						</li>
 
+						<li>
+							<Link to="/documentation">
+								<button
+									type="button"
+									className={` ${activeTab === 20 ? "active" : ""} `}
+									onClick={() => isOpenSubmenu(20)}
+								>
+									<span className="icon">
+										{" "}
+										<CgFileDocument />{" "}
+									</span>
+									documentation
+								</button>
+							</Link>
+						</li>
+
 						{/* <li>
 							<Link to="/message">
 								<button
@@ -596,8 +612,8 @@ const SideBar = () => {
 							<Link to="/CulturalHeritageForm">
 								<button
 									type="button"
-									className={` ${activeTab === 18 ? "active" : ""} `}
-									onClick={() => isOpenSubmenu(18)}
+									className={` ${activeTab === 19 ? "active" : ""} `}
+									onClick={() => isOpenSubmenu(19)}
 								>
 									<span className="icon">
 										{" "}
@@ -607,7 +623,7 @@ const SideBar = () => {
 								</button>
 							</Link>
 						</li>
-						<li>
+						{/* <li>
 							<Link to="/documentation">
 								<button
 									className={` ${activeTab === 20 ? "active" : ""} `}
@@ -620,7 +636,7 @@ const SideBar = () => {
 									documentation
 								</button>
 							</Link>
-						</li>
+						</li> */}
 						<li>
 							<Link to="/change-log">
 								<button
@@ -636,6 +652,20 @@ const SideBar = () => {
 							</Link>
 						</li>
 						<li>
+							<Link to="/AadiVishvavidyalaForm">
+								<button
+									className={` ${activeTab === 22 ? "active" : ""} `}
+									onClick={() => isOpenSubmenu(22)}
+								>
+									<span className="icon">
+										{" "}
+										<FaMicroblog />{" "}
+									</span>
+									Aadi Vishwavidyalaya Form
+								</button>
+							</Link>
+						</li>
+						{/* <li>
 							<Link to="/category-add">
 								<button
 									className={` ${activeTab === 22 ? "active" : ""} `}
@@ -648,7 +678,7 @@ const SideBar = () => {
 									Category Add
 								</button>
 							</Link>
-						</li>
+						</li> */}
 						<li>
 							<Link to="/category-list">
 								<button

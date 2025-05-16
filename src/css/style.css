@@ -9001,3 +9001,6 @@ text-align:center;
 #sampadaClothing .sampadas-heads {
   width: max-content;
 }
+.form-group label {
+    position: relative!important;
+}
