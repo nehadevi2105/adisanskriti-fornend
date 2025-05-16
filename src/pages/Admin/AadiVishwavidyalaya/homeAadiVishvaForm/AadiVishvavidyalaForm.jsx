@@ -1,191 +1,146 @@
-import { useState } from "react";
-import { Button } from "@mui/material";
-import "./AadiVishvavidyalaForm.css";
-
-const artFormOptions = [
-	"Tribal Painting",
-	"Tribal Dance",
-	"Tribal Clothing and Textile",
-	"Tribal Artifacts",
-	"Tribal Livelihood",
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AadiVishvavidyalaForm = () => {
-	const [description, setDescription] = useState("");
-	const [artFormName, setArtFormName] = useState("");
-	const [imageFiles, setImageFiles] = useState([]);
-	const [detailsList, setDetailsList] = useState([]);
+  const [description, setDescription] = useState('');
+  const [artForms, setArtForms] = useState([{ artformname: '', imagefile: null }]);
+  const [data, setData] = useState([]);
 
-	const handleAddDetail = () => {
-		if (!artFormName || imageFiles.length === 0) {
-			alert("Please select an art form and at least one image.");
-			return;
-		}
+  // 🔁 Fetch data on load (optional)
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
 
-		const newDetail = {
-			id: Date.now(),
-			artFormName: artFormName,
-			imageFiles: Array.from(imageFiles).map((file) =>
-				URL.createObjectURL(file),
-			),
-		};
+  const fetchData = async () => {
+    const res = await axios.get('/api/AadiVishwavidyalaya');
+    setData(res.data);
+  };
 
-		setDetailsList([...detailsList, newDetail]);
-		setArtFormName("");
-		setImageFiles([]);
-	};
+  const handleChange = (index, field, value) => {
+    const newForms = [...artForms];
+    newForms[index][field] = value;
+    setArtForms(newForms);
+  };
 
-	const handleDeleteDetail = (id) => {
-		setDetailsList(detailsList.filter((detail) => detail.id !== id));
-	};
+  const addFormField = () => {
+    setArtForms([...artForms, { artformname: '', imagefile: null }]);
+  };
 
-	const handleImageChange = (event) => {
-		setImageFiles(event.target.files);
-	};
+  const removeFormField = (index) => {
+    const newForms = [...artForms];
+    newForms.splice(index, 1);
+    setArtForms(newForms);
+  };
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-		if (detailsList.length === 0) {
-			alert("Please add at least one art form detail.");
-			return;
-		}
+    const formData = new FormData();
+    formData.append('Description', description);
 
-		const formData = {
-			description: description,
-			details: detailsList.map((detail) => ({
-				artFormName: detail.artFormName,
-				imageFiles: detail.imageFiles, // In a real scenario, you might need to handle file uploads differently
-			})),
-		};
+    artForms.forEach((item, index) => {
+      formData.append(`ArtFormName`, item.artformname); // repeatable field
+      formData.append(`ImageFile`, item.imagefile); // repeatable file
+    });
 
-		console.log("Form Data:", formData);
-		alert("Form submitted successfully! (Data logged to console)");
+    try {
+		debugger;
+      const res = await axios.post('https://localhost:5281/api/AadiVishwavidyalaya', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setData(res.data);
+      alert("Submitted successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Submission failed.");
+    }
+  };
 
-		// Clear the form
-		setDescription("");
-		setDetailsList([]);
-	};
+  return (
+    <div className="container mt-4">
+      <h2>Aadi Vishwavidyalaya Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label>Description</label>
+          <input
+            type="text"
+            className="form-control"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
 
-	return (
-		<form className="form-container" onSubmit={handleSubmit}>
-			<h2 className="form-title">Aadi Vishvavidyala Form</h2>
+        <h5>Art Forms</h5>
+        {artForms.map((item, index) => (
+          <div key={index} className="row mb-2">
+            <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Art Form Name"
+                value={item.artformname}
+                onChange={(e) => handleChange(index, 'artformname', e.target.value)}
+                required
+              />
+            </div>
+            <div className="col">
+              <input
+                type="file"
+                className="form-control"
+                onChange={(e) => handleChange(index, 'imagefile', e.target.files[0])}
+                required
+              />
+            </div>
+            <div className="col-auto">
+              {index > 0 && (
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => removeFormField(index)}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+        <button type="button" className="btn btn-secondary mb-3" onClick={addFormField}>
+          Add More
+        </button>
 
-			<div className="form-group">
-				<label htmlFor="description">Description</label>
-				<textarea
-					id="description"
-					rows={3}
-					placeholder="Enter description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
-					required
-				></textarea>
-			</div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+      </form>
 
-			<div className="form-group">
-				<label htmlFor="artFormName">Art Form</label>
-				<select
-					id="artFormName"
-					value={artFormName}
-					onChange={(e) => setArtFormName(e.target.value)}
-				>
-					<option value="">Select Art Form</option>
-					{artFormOptions.map((option, index) => (
-						<option key={index} value={option}>
-							{option}
-						</option>
-					))}
-				</select>
-			</div>
+      <hr />
 
-			<div className="form-group">
-				<label htmlFor="imageFile">Image(s)</label>
-				<input
-					type="file"
-					id="imageFile"
-					multiple
-					accept="image/*"
-					onChange={handleImageChange}
-				/>
-				{imageFiles && imageFiles.length > 0 && (
-					<div className="image-preview-container">
-						{Array.from(imageFiles).map((file, index) => (
-							<img
-								key={index}
-								src={URL.createObjectURL(file)}
-								alt={file.name}
-								className="image-preview"
-							/>
-						))}
-					</div>
-				)}
-			</div>
-
-			<div className="button-container">
-				<Button variant="contained" color="success" onClick={handleAddDetail}>
-					Add Details
-				</Button>
-			</div>
-
-			<div className="details-table-container">
-				<h4>Added Art Form Details</h4>
-				<table className="details-table">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Art Form</th>
-							<th>Images</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{detailsList.length === 0 ? (
-							<tr>
-								<td colSpan="4" className="no-data">
-									No details added.
-								</td>
-							</tr>
-						) : (
-							detailsList.map((detail, index) => (
-								<tr key={detail.id}>
-									<td>{index + 1}</td>
-									<td>{detail.artFormName}</td>
-									<td>
-										<div className="image-list-preview">
-											{detail.imageFiles.map((image, imgIndex) => (
-												<img
-													key={imgIndex}
-													src={image}
-													alt={`preview-${imgIndex}`}
-													className="list-image-preview"
-												/>
-											))}
-										</div>
-									</td>
-									<td>
-										<Button
-											variant="outlined"
-											color="error"
-											onClick={() => handleDeleteDetail(detail.id)}
-										>
-											Delete
-										</Button>
-									</td>
-								</tr>
-							))
-						)}
-					</tbody>
-				</table>
-			</div>
-
-			<div className="button-container">
-				<Button type="submit" variant="contained" color="primary">
-					Submit Form
-				</Button>
-			</div>
-		</form>
-	);
+      {/* <h3>All Entries</h3>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Art Form</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, idx) => (
+            <tr key={idx}>
+              <td>{item.id}</td>
+              <td>{item.description}</td>
+              <td>{item.artFormName}</td>
+              <td>
+                {item.imagePath && (
+                  <img src={item.imagePath} alt="Art" style={{ width: '100px' }} />
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table> */}
+    </div>
+  );
 };
 
 export default AadiVishvavidyalaForm;

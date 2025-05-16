@@ -88,14 +88,7 @@ import AdiSanskritiForm from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/Ad
 import AdiSanskritiList from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/AdiSanskritiList";
 import EditAdiSanskriti from "../pages/Admin/AadiVishwavidyalaya/adisanskriti/EditAdiSanskriti";
 
-//website
-//website header
-import Header from "../pages/website/components/Header";
-import Footer from "../pages/website/components/Footer";
-//Aadi VishwaVidyalaWeb
-import AadiVishwaVidyalaWeb from "../pages/website/aadiVishwaVidyalaWeb/AadiVishwaVidyalaWeb";
-//Aadi Sampada
-import AadiSampada from "../pages/website/aadiSampada/AadiSampada";
+
 
 
 //website
