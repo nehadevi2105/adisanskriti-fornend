@@ -49,13 +49,16 @@ const UploadSlider = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-50 p-4" style={{ minHeight: 'calc(100vh - 64px)' }}>
-      <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden">
+    
+        <div className="min-h-screen bg-gray-100 white:bg-gray-900">
+       <div className="py-3 px-4 shadow-md">
         <div className="bg-blue-600 text-white py-3 px-4 text-center">
           <h4 className="text-lg font-semibold">Slider Upload</h4>
         </div>
 
-        <div className="p-6">
+     
+      <div className="p-4 sm:px-6 lg:px-8">
+         <div className="max-w-7xl mx-auto"></div>
           <form onSubmit={handleUpload} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -92,6 +95,7 @@ const UploadSlider = () => {
             </div>
           </form>
         </div>
+        
       </div>
     </div>
   );
