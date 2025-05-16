@@ -42,40 +42,41 @@ const SliderList = () => {
   };
 
   return (
-      <div className="min-h-screen bg-gray-100 white:bg-gray-900">
-       <div className="py-3 px-4 shadow-md"></div>
-    <div style={{ padding: "20px" }}>
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          textAlign: "left",
-        }}
-      >
-        <thead>
-          <tr>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>ID</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Media Preview</th>
-            <th style={{ border: "1px solid #ddd", padding: "8px" }}>File Path</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sliderData.map((item) => (
-            <tr key={item.id}>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>{item.id}</td>
-              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                {renderMedia(item.slidervideo)}
-              </td>
-              <td style={{ border: "1px solid #ddd", padding: "8px", wordBreak: "break-word" }}>
-                {item.slidervideo}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="min-h-screen bg-gray-100 white:bg-gray-900">
+      <div className="py-3 px-4 shadow-md">
+        <div style={{ padding: "20px" }}>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              textAlign: "left",
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>ID</th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>Media Preview</th>
+                <th style={{ border: "1px solid #ddd", padding: "8px" }}>File Path</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sliderData.map((item) => (
+                <tr key={item.id}>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>{item.id}</td>
+                  <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                    {renderMedia(item.slidervideo)}
+                  </td>
+                  <td style={{ border: "1px solid #ddd", padding: "8px", wordBreak: "break-word" }}>
+                    {item.slidervideo}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    </div>
-  
+
   );
 };
 
