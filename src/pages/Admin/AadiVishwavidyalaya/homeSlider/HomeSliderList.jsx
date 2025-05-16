@@ -110,6 +110,8 @@ const HomeSliderList = () => {
 	}, [items, loading, error, handleDelete]);
 
 	return (
+		 <div className="min-h-screen bg-gray-100 white:bg-gray-900">
+      
 		<div className="p-4">
 			<h2 className="text-2xl font-semibold mb-4">Home Slider List</h2>
 			<div className="overflow-x-auto bg-white rounded-xl shadow-md">
@@ -125,6 +127,8 @@ const HomeSliderList = () => {
 				</table>
 			</div>
 		</div>
+		</div>
+		
 	);
 };
 
