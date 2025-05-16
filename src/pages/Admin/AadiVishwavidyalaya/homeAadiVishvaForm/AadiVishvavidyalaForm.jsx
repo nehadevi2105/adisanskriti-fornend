@@ -63,8 +63,13 @@ const AadiVishvavidyalaForm = () => {
 	};
 
 	return (
-		<div className="container mt-4">
-			<h2>Aadi Vishwavidyalaya Form</h2>
+		<div className="min-h-screen bg-gray-100 white:bg-gray-900">
+			<div className="py-3 px-4 shadow-md">
+				 <div className="bg-blue-600 text-white py-3 px-4 text-center">
+          <h4 className="text-lg font-semibold">Aadi Vishwavidyalaya Form</h4>
+        </div>
+				<div className="p-4 sm:px-6 lg:px-8">
+					<div className="max-w-7xl mx-auto">
 			<form onSubmit={handleSubmit}>
 				<div className="mb-3">
 					<label>Description</label>
@@ -127,34 +132,36 @@ const AadiVishvavidyalaForm = () => {
 					Submit
 				</button>
 			</form>
-
+</div>
+</div>
 			<hr />
 
-			{/* <h3>All Entries</h3>
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Description</th>
-            <th>Art Form</th>
-            <th>Image</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, idx) => (
-            <tr key={idx}>
-              <td>{item.id}</td>
-              <td>{item.description}</td>
-              <td>{item.artFormName}</td>
-              <td>
-                {item.imagePath && (
-                  <img src={item.imagePath} alt="Art" style={{ width: '100px' }} />
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+			<h3>All Entries</h3>
+			<table className="table table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Description</th>
+						<th>Art Form</th>
+						<th>Image</th>
+					</tr>
+				</thead>
+				<tbody>
+					{data.map((item, idx) => (
+						<tr key={idx}>
+							<td>{item.id}</td>
+							<td>{item.description}</td>
+							<td>{item.artFormName}</td>
+							<td>
+								{item.imagePath && (
+									<img src={item.imagePath} alt="Art" style={{ width: '100px' }} />
+								)}
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 		</div>
 	);
 };

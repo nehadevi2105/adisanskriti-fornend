@@ -103,6 +103,7 @@ import AadiSampada from "../pages/website/aadiSampada/AadiSampada";
 
 //Cultural Heritage
 import CulturalHeritageForm from "../pages/Admin/AadiVishwavidyalaya/culturalHeritage/CulturalHeritageForm";
+import CulturalHeritageList from "../pages/Admin/AadiVishwavidyalaya/culturalHeritage/CulturalHeritageList";
 
 //home- AadiVishvavidyalaForm
 import AadiVishvavidyalaForm from "../pages/Admin/AadiVishwavidyalaya/homeAadiVishvaForm/AadiVishvavidyalaForm";
@@ -343,6 +344,11 @@ export const privateRoute = [
 						path: "/AadiVishvavidyalaForm",
 						element: <AadiVishvavidyalaForm />,
 					},
+					{
+						path: "/CulturalHeritageList",
+						element: <CulturalHeritageList />,
+					},
+
 				],
 			},
 		],

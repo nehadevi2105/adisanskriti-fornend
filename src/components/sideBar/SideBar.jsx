@@ -681,20 +681,20 @@ const SideBar = () => {
 								</button>
 							</Link>
 						</li>
-						{/* <li>
-							<Link to="/category-add">
+						<li>
+							<Link to="/CulturalHeritageList">
 								<button
-									className={` ${activeTab === 22 ? "active" : ""} `}
-									onClick={() => isOpenSubmenu(22)}
+									className={` ${activeTab === 23 ? "active" : ""} `}
+									onClick={() => isOpenSubmenu(23)}
 								>
 									<span className="icon">
 										{" "}
 										<FaMicroblog />{" "}
 									</span>
-									Category Add
+									Cultural Heritage List
 								</button>
 							</Link>
-						</li> */}
+						</li>
 						{/* <li>
 							<Link to="/category-list">
 								<button
