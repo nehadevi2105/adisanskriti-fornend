@@ -112,3 +112,137 @@
     font-size: 0.875rem;
     margin-top: 0.25rem;
 }
+
+.tableContainer {
+    overflow-x: auto;
+    background-color: #fff;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    margin-top: 1rem; /* Adjust as needed */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e5e7eb; /* Add table border */
+}
+
+.thead {
+    background-color: #f3f4f6; /* Light gray header */
+    color: #4b5563; /* Medium gray text */
+    font-size: 0.875rem; /* text-sm equivalent */
+    text-transform: uppercase;
+}
+
+.th {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #d1d5db;
+    text-align: left;
+}
+
+.row {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.row:hover {
+    background-color: #f9fafb;
+}
+
+.cell {
+    padding: 0.75rem 1rem;
+    border-right: 1px solid #e5e7eb; /* Add cell borders */
+}
+
+.cell:last-child {
+    border-right: none; /* Remove border from the last cell */
+}
+
+.actionsCell {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    border-right: 1px solid #e5e7eb; /* Add border to actions cell */
+}
+
+.actionsCell:last-child {
+    border-right: none; /* Remove border from the last actions cell */
+}
+
+.editButton,
+.deleteButton {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+    margin-right: 0.25rem;
+}
+
+.editButton {
+    background-color: #3b82f6; /* Blue */
+    color: white;
+}
+
+.editButton:hover {
+    background-color: #2563eb;
+}
+
+.deleteButton {
+    background-color: #ef4444; /* Red */
+    color: white;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+}
+
+.loadingRow .loadingCell {
+    padding: 0.75rem 1rem;
+    border-right: 1px solid #e5e7eb;
+}
+
+.loadingRow .loadingCell:last-child {
+    border-right: none;
+}
+
+.skeleton {
+    height: 1rem;
+    background-color: #e0e0e0;
+    border-radius: 0.25rem;
+    width: 75%;
+    margin: 0 auto;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.errorText {
+    padding: 1rem;
+    text-align: center;
+    color: #dc2626;
+}
+
+.noDataText {
+    padding: 1rem;
+    text-align: center;
+    color: #718096;
+}
+
+.previewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.previewImage {
+    width: 50px; /* Adjust as needed */
+    height: auto;
+    border-radius: 0.25rem;
+    object-fit: cover;
+}

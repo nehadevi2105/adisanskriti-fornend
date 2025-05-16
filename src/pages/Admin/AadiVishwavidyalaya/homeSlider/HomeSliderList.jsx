@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import APIClient from "../../../../API/APIClient";
+import styles from "./HomeSliderForm.module.css"; // Import the CSS module
 
 const HomeSliderList = () => {
 	const [items, setItems] = useState([]);
@@ -48,10 +49,10 @@ const HomeSliderList = () => {
 	const renderTableRows = useMemo(() => {
 		if (loading) {
 			return Array.from({ length: 3 }).map((_, i) => (
-				<tr key={`skeleton-${i}`} className="animate-pulse border-t">
+				<tr key={`skeleton-${i}`} className={styles.loadingRow}>
 					{Array.from({ length: 3 }).map((__, j) => (
-						<td key={j} className="px-4 py-2 border">
-							<div className="h-4 bg-gray-200 rounded w-3/4 mx-auto" />
+						<td key={j} className={styles.loadingCell}>
+							<div className={styles.skeleton}></div>
 						</td>
 					))}
 				</tr>
@@ -61,7 +62,7 @@ const HomeSliderList = () => {
 		if (error) {
 			return (
 				<tr>
-					<td colSpan="3" className="px-4 py-4 text-center text-red-600">
+					<td colSpan="3" className={styles.errorText}>
 						{error}
 					</td>
 				</tr>
@@ -71,7 +72,7 @@ const HomeSliderList = () => {
 		if (items.length === 0) {
 			return (
 				<tr>
-					<td colSpan="3" className="px-4 py-4 text-center">
+					<td colSpan="3" className={styles.noDataText}>
 						No records found.
 					</td>
 				</tr>
@@ -79,28 +80,28 @@ const HomeSliderList = () => {
 		}
 
 		return items.map((item) => (
-			<tr key={item.id} className="border-t hover:bg-gray-50">
-				<td className="px-4 py-2 border">{item.id1}</td>
-				<td className="px-4 py-2 border text-center">
+			<tr key={item.id} className={styles.row}>
+				<td className={styles.cell}>{item.id1}</td>
+				<td className={styles.cell}>
 					{item.media?.endsWith(".mp4") ? (
 						<video
 							src={`${APIClient.defaults.baseURL}/${item.media}`}
 							controls
-							className="w-40 h-24 rounded mx-auto"
+							className={styles.mediaPreview}
 						/>
 					) : (
 						<img
 							src={`${APIClient.defaults.baseURL}/${item.media}`}
 							alt="Slider"
-							className="w-28 h-20 object-cover rounded mx-auto"
+							className={styles.mediaPreview}
 						/>
 					)}
 				</td>
-				<td className="px-4 py-2 border text-center">
+				<td className={styles.actionsCell}>
 					<button
 						type="button"
 						onClick={() => handleDelete(item.id)}
-						className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+						className={styles.deleteButton}
 					>
 						Delete
 					</button>
@@ -110,15 +111,15 @@ const HomeSliderList = () => {
 	}, [items, loading, error, handleDelete]);
 
 	return (
-		<div className="p-4">
-			<h2 className="text-2xl font-semibold mb-4">Home Slider List</h2>
-			<div className="overflow-x-auto bg-white rounded-xl shadow-md">
-				<table className="min-w-full table-auto text-sm text-left border border-gray-200">
-					<thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+		<div className={styles.container}>
+			<h2 className={styles.heading}>Home Slider List</h2>
+			<div className={styles.tableContainer}>
+				<table className={styles.table}>
+					<thead className={styles.thead}>
 						<tr>
-							<th className="px-4 py-3 border">S.No</th>
-							<th className="px-4 py-3 border text-center">Image / Video</th>
-							<th className="px-4 py-3 border text-center">Action</th>
+							<th className={styles.th}>S.No</th>
+							<th className={styles.th}>Image / Video</th>
+							<th className={styles.th}>Action</th>
 						</tr>
 					</thead>
 					<tbody>{renderTableRows}</tbody>
