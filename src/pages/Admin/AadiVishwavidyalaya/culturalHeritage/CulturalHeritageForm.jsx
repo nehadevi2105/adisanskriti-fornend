@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import APIClient from "../../../../API/APIClient";
+import apis from "../../../../API/API.json";
 
 const CulturalHeritageForm = () => {
 	const [title, setTitle] = useState("");
@@ -37,16 +39,31 @@ const CulturalHeritageForm = () => {
 		});
 
 		try {
-			const response = await axios.post(
-				"https://localhost:5281/api/CulturalHeritage/InsertCulturalHeritage",
-				formData,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				}
-			);
-			alert(response.data.message);
+			// const response = await axios.post(
+			// 	"https://localhost:5281/api/CulturalHeritage/InsertCulturalHeritage",
+			// 	formData,
+			// 	{
+			// 		headers: {
+			// 			"Content-Type": "multipart/form-data",
+			// 		},
+			// 	}
+			// );
+debugger;
+			const response = await APIClient.post(apis.postCulturalHeritage, formData, {
+				
+							headers: {
+								"Content-Type": "multipart/form-data",
+							},
+						});
+			if(response.data.heritageId>0)
+			{
+				alert("Cultural Heritage saved successfully!");
+			}
+			else
+			{
+				alert("Something Error!");
+			}
+		
 		} catch (error) {
 			console.error("Error saving cultural heritage:", error);
 			alert("Failed to save data.");

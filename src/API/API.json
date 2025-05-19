@@ -42,5 +42,6 @@
 	"UpdateAdiSanskriti": "/api/AadiSanskriti/Update/",
 
 	"postCulturalHeritage" : "/api/CulturalHeritage/InsertCulturalHeritage"
+	
 
 }

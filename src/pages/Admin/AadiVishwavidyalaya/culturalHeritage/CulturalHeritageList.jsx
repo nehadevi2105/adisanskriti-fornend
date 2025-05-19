@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import APIClient from "../../../../API/APIClient";
+import apis from "../../../../API/API.json";
+import { BASE_URL } from "../../../../API/APIClient";
+
 
 const CulturalHeritageList = () => {
     const [heritageList, setHeritageList] = useState([]);
@@ -13,7 +17,8 @@ const CulturalHeritageList = () => {
 
     const fetchHeritage = async () => {
         try {
-            const response = await axios.get('https://localhost:5281/api/CulturalHeritage/GetAllHeritage');
+            const response = await APIClient.get("/api/CulturalHeritage/GetAllHeritage");
+            //const response = await axios.get('https://localhost:5281/api/CulturalHeritage/GetAllHeritage');
             setHeritageList(response.data);
         } catch (error) {
             console.error('Error fetching cultural heritage:', error);
@@ -27,7 +32,8 @@ const CulturalHeritageList = () => {
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure you want to delete this item?')) return;
         try {
-            await axios.delete(`/api/CulturalHeritage/Delete/${id}`);
+              await APIClient.get(`/api/CulturalHeritage/Delete/${id}`);
+           // await axios.delete(`/api/CulturalHeritage/Delete/${id}`);
             fetchHeritage(); // Refresh list after deletion
         } catch (error) {
             console.error('Delete failed:', error);
@@ -60,7 +66,7 @@ const CulturalHeritageList = () => {
                                                 <p>{detail.content}</p>
                                                 {detail.imagePath && (
                                                     <img
-                                                        src={detail.imagePath}
+                                                        src={ BASE_URL + detail.imagePath}
                                                         alt={detail.title}
                                                         style={{ maxWidth: '200px', marginTop: '10px' }}
                                                     />

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+export const BASE_URL = "https://localhost:5281";
+
 const APIClient = axios.create({
-	baseURL: "https://localhost:5281",
+	baseURL: BASE_URL,
 	//httpsAgent: false, // Disable HTTPS
 	headers: {
 		"Content-Type": "application/json",
